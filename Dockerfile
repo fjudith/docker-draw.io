@@ -12,8 +12,8 @@ RUN cd /tmp && \
     wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
     unzip v${VERSION}.zip
 
-RUN cp -rp /tmp/draw.io-${VERSION}/* /var/www/html/ && \
-	chown -R www-data:www-data /var/www/html/ && ls -l
+RUN cp -rp /tmp/draw.io-${VERSION} /var/www/html/draw.io && \
+	chown -R www-data:www-data /var/www/html/
 
 EXPOSE 80
 
