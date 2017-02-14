@@ -2,7 +2,7 @@ FROM php:5-apache
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
-ENV VERSION=6.0.3.7
+ENV VERSION=6.1.0.2
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends wget unzip && \

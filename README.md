@@ -12,9 +12,9 @@ The Dockerfile buils from "php:5-apache (see https://hub.docker.com/_/php/)
 Run the container.
 
 ```bash
-docker run -it --rm -name="draw" -p 80:80 fjudith/draw.io
+docker run -it --rm -name="draw.io" -p 80:80 fjudith/draw.io
 ```
 
 Start a web browser session to http://ip:port/draw.io/war/index.html?offline=1
 
-> `offline=1` is a security feature that disables support of cloud storage.
+> `?offline=1` argument is a security feature that disables support of cloud storage.
