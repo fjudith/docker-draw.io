@@ -1,4 +1,4 @@
-FROM jetty
+FROM tomcat
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
