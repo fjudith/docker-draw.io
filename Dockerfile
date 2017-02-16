@@ -1,17 +1,18 @@
-FROM tomcat
+FROM tomcat:8-jre7
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
 ENV VERSION=6.0.3.7
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-7-jdk git patch && \
-	rm -r /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends openjdk-7-jdk ant git patch
 
+# Download
 RUN cd /tmp && \
     wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
     unzip v${VERSION}.zip 
 
+# Patch EmbedServlet2
 ADD assets/embed2js.patch /tmp/draw.io-${VERSION}/war/plugins/
 
 RUN cd /tmp/draw.io-${VERSION} && \
@@ -20,6 +21,13 @@ RUN cd /tmp/draw.io-${VERSION} && \
     ant war && \
     cd ../../build && \
     cp -rp /tmp/draw.io-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
+
+# Cleanup
+RUN rm -r /var/lib/apt/lists/* && \
+    rm -rf \
+    /tmp/draw.io-${VERSION}.zip \
+    /tmp/draw.io-${VERSION}
+    
 
 WORKDIR $CATALINA_HOME
 
