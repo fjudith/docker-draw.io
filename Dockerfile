@@ -2,7 +2,7 @@ FROM tomcat:8-jre7
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
-ENV VERSION=6.0.3.7
+ENV VERSION=6.1.0.2
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-7-jdk ant git patch
