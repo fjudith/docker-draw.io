@@ -2,7 +2,7 @@
 
 # Supported tags and respective Dockerfile links
 
-[`6.1.0.3`, `latest`]()
+[`6.1.2`, `latest`]()
 [`6.1.0.2`](https://github.com/fjudith/docker-draw.io/commit/13f57ca0aa52dad85fb88541eb155e139689a72d)
 [`6.0.3.7`](https://github.com/fjudith/docker-draw.io/commit/e6a3f45cf779cd3f81059291a9a502b06e9959c3)
 
