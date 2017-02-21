@@ -31,7 +31,7 @@ Run the container.
 docker run -it --rm -name="draw" -p 80:80 fjudith/draw.io
 ```
 
-Start a web browser session to http://ip:port/draw.io/war/index.html?offline=1
+Start a web browser session to http://ip:port/draw?offline=1
 
 > `offline=1` is a security feature that disables support of cloud storage.
 
