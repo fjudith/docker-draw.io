@@ -13,7 +13,7 @@ draw.io (formerly Diagramly) is free online diagram software. You can use it as 
 
  # Description
 
-The Dockerfile builds from "Tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/)
+The Dockerfile buils from "tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/)
 
 **This image does not leverage embedded database**
 
@@ -28,12 +28,12 @@ The Dockerfile builds from "Tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/
 Run the container.
 
 ```bash
-docker run -it --rm -name="draw" -p 80:80 fjudith/draw.io
+docker run -it --rm -name="draw.io" -p 80:80 fjudith/draw.io
 ```
 
-Start a web browser session to http://ip:port/draw.io/war/index.html?offline=1
+Start a web browser session to http://ip:port/draw
 
-> `offline=1` is a security feature that disables support of cloud storage.
+> `?offline=1` argument is a security feature that disables support of cloud storage.
 
 
 # Reference

@@ -28,11 +28,8 @@ RUN rm -r /var/lib/apt/lists/* && \
     /tmp/draw.io-${VERSION}.zip \
     /tmp/draw.io-${VERSION}
     
-
 WORKDIR $CATALINA_HOME
-
 
 EXPOSE 8080
 
 CMD ["catalina.sh", "run"]
-
