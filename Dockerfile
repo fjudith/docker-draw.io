@@ -16,7 +16,7 @@ RUN cd /tmp && \
 ADD assets/embed2js.patch /tmp/draw.io-${VERSION}/war/plugins/
 
 RUN cd /tmp/draw.io-${VERSION} && \
-    patch -p1 war/plugins/embed2js.patch && \
+    #patch -p1 war/plugins/embed2js.patch && \
     cd etc/build && \
     ant war && \
     cd ../../build && \
