@@ -5,7 +5,7 @@ MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 ENV VERSION=6.4.5-1
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-8-jdk
+    apt-get install -y --no-install-recommends openjdk-8-jdk wget
 
 # Download
 RUN cd /tmp && \
