@@ -9,14 +9,13 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-7-jdk wget
 
 # Download Google  Api Engine
-RUN cd /tmp/ && \
-    wget https://repo1.maven.org/maven2/com/google/appengine/appengine-endpoints/${GOOGLE_API}/appengine-endpoints-${GOOGLE_API}.jar && \
-    unzip google-api-client-assembly-${GOOGLE_API}-${GOOGLE_API}.zip
+RUN ${JETTY_BASE}/lib/ext/ && \
+    wget https://repo1.maven.org/maven2/com/google/appengine/appengine-endpoints/${GOOGLE_API}/appengine-endpoints-${GOOGLE_API}.jar
+    
 
 # Download
-RUN cd /tmp && \
-    wget https://github.com/jgraph/draw.io/releases/download/v${VERSION}/draw.war && \
-    cp -rp /tmp/draw.war ${JETTY_BASE}/webapps/
+RUN cd ${JETTY_BASE}/webapps/ && \
+    wget https://github.com/jgraph/draw.io/releases/download/v${VERSION}/draw.war
 
 WORKDIR ${JETTY_BASE}
 
