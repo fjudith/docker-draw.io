@@ -1,11 +1,17 @@
-FROM jetty:9-jre8
+FROM jetty:9-jre7
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
 ENV VERSION=6.4.5-1
+ENV GOOGLE_API=1.9.9
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-8-jdk wget
+    apt-get install -y --no-install-recommends openjdk-7-jdk wget
+
+# Download Google  Api Engine
+RUN cd /tmp/ && \
+    wget https://repo1.maven.org/maven2/com/google/appengine/appengine-endpoints/${GOOGLE_API}/appengine-endpoints-${GOOGLE_API}.jar && \
+    unzip google-api-client-assembly-${GOOGLE_API}-${GOOGLE_API}.zip
 
 # Download
 RUN cd /tmp && \
