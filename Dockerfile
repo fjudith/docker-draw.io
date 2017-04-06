@@ -9,7 +9,7 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-7-jdk wget
 
 # Download Google  Api Engine
-RUN ${JETTY_BASE}/lib/ext/ && \
+RUN cd ${JETTY_BASE}/lib/ext/ && \
     wget https://repo1.maven.org/maven2/com/google/appengine/appengine-endpoints/${GOOGLE_API}/appengine-endpoints-${GOOGLE_API}.jar
     
 
