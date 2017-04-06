@@ -16,4 +16,5 @@ WORKDIR ${JETTY_BASE}
 
 EXPOSE 8080
 
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["java","-jar","/usr/local/jetty/start.jar"]

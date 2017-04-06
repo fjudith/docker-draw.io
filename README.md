@@ -28,7 +28,7 @@ The Dockerfile builds from "Tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/
 Run the container.
 
 ```bash
-docker run -it --rm --name="draw" -p 80:80 fjudith/draw.io
+docker run -it --rm --name="draw" -p 8080:8080 fjudith/draw.io
 ```
 
 Start a web browser session to http://ip:port/draw?offline=1
