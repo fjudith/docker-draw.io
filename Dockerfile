@@ -1,25 +1,36 @@
-FROM jetty:9-jre7
+FROM tomcat:8-jre7
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
 ENV VERSION=6.4.5-1
-ENV GOOGLE_API=1.9.9
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-7-jdk wget
-
-# Download Google  Api Engine
-RUN cd ${JETTY_BASE}/lib/ext/ && \
-    wget https://repo1.maven.org/maven2/com/google/appengine/appengine-endpoints/${GOOGLE_API}/appengine-endpoints-${GOOGLE_API}.jar
-    
+    apt-get install -y --no-install-recommends openjdk-7-jdk ant git patch
 
 # Download
-RUN cd ${JETTY_BASE}/webapps/ && \
-    wget https://github.com/jgraph/draw.io/releases/download/v${VERSION}/draw.war
+RUN cd /tmp && \
+    wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
+    unzip v${VERSION}.zip 
 
-WORKDIR ${JETTY_BASE}
+# Patch EmbedServlet2
+ADD assets/embed2js.patch /tmp/draw.io-${VERSION}/war/plugins/
+
+RUN cd /tmp/draw.io-${VERSION} && \
+    patch -p1 war/plugins/embed2js.patch && \
+    cd etc/build && \
+    ant war && \
+    cd ../../build && \
+    cp -rp /tmp/draw.io-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
+
+# Cleanup
+RUN rm -r /var/lib/apt/lists/* && \
+    rm -rf \
+    /tmp/draw.io-${VERSION}.zip \
+    /tmp/draw.io-${VERSION}
+    
+
+WORKDIR $CATALINA_HOME
 
 EXPOSE 8080
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["java","-jar","/usr/local/jetty/start.jar"]
+CMD ["catalina.sh", "run"]
