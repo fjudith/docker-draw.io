@@ -1,11 +1,15 @@
-FROM tomcat:8-jre7
+FROM tomcat:8-jre8
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
+<<<<<<< HEAD
 ENV VERSION=6.5.8
+=======
+ENV VERSION=6.3.6
+>>>>>>> a463da2f3850735704314a029ef04de4d0c96c22
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-7-jdk ant git patch
+    apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch
 
 # Download
 RUN cd /tmp && \
@@ -25,7 +29,7 @@ RUN cd /tmp/draw.io-${VERSION} && \
 # Cleanup
 RUN rm -r /var/lib/apt/lists/* && \
     rm -rf \
-    /tmp/draw.io-${VERSION}.zip \
+    /tmp/v${VERSION}.zip \
     /tmp/draw.io-${VERSION}
     
 

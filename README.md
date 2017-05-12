@@ -2,10 +2,16 @@
 
 # Supported tags and respective Dockerfile links
 
+<<<<<<< HEAD
 [`6.5.8`, `latest`](https://github.com/fjudith/docker-draw.io/tree/6.5.8)
 [`6.5.7`](https://github.com/fjudith/docker-draw.io/tree/6.5.7)
 [`6.4.2`](https://github.com/fjudith/docker-draw.io/tree/6.4.2)
 
+=======
+[`6.3.6`, `latest`](https://github.com/fjudith/docker-draw.io/tree/6.3.6)
+[`6.2.9`](https://github.com/fjudith/docker-draw.io/tree/6.2.9)
+[`6.1.2`](https://github.com/fjudith/docker-draw.io/tree/6.1.2)
+>>>>>>> a463da2f3850735704314a029ef04de4d0c96c22
 
 
 # Introduction
@@ -29,7 +35,11 @@ The Dockerfile builds from "Tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/
 Run the container.
 
 ```bash
+<<<<<<< HEAD
 docker run -it --rm --name="draw" -p 8080:8080 fjudith/draw.io
+=======
+docker run -it --rm --name="draw" -p 80:80 fjudith/draw.io
+>>>>>>> a463da2f3850735704314a029ef04de4d0c96c22
 ```
 
 Start a web browser session to http://ip:port/draw?offline=1
