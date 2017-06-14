@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
-ENV VERSION=6.5.10
+ENV VERSION=6.7.8
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet
@@ -31,7 +31,7 @@ RUN cd $CATALINA_HOME && \
     -i '/Server/Service/Engine/Host/Context[@path="/"]' -t 'attr' -n 'docBase' -v 'draw' \
     -s '/Server/Service/Engine/Host/Context[@path="/"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
     -s '/Server/Service/Engine/Host' -t 'elem' -n 'Context' \
-    -i '/Server/Service/Engine/Host/Context[not @path="/"]' -t 'attr' -n 'path' -v '/ROOT' \
+    -i '/Server/Service/Engine/Host/Context[not(@path="/")]' -t 'attr' -n 'path' -v '/ROOT' \
     -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'attr' -n 'docBase' -v 'ROOT' \
     -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
     conf/server.xml
