@@ -5,7 +5,7 @@ MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 ENV VERSION=6.5.10
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch
+    apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet
 
 # Download
 RUN cd /tmp && \
@@ -21,6 +21,20 @@ RUN cd /tmp/draw.io-${VERSION} && \
     ant war && \
     cd ../../build && \
     cp -rp /tmp/draw.io-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
+
+# Update server.xml to set Draw.io webapp to root
+RUN cd $CATALINA_HOME && \
+    xmlstarlet ed \
+    -P -S -L \
+    -s '/Server/Service/Engine/Host' -t 'elem' -n 'Context' \
+    -i '/Server/Service/Engine/Host/Context' -t 'attr' -n 'path' -v '/' \
+    -i '/Server/Service/Engine/Host/Context[@path="/"]' -t 'attr' -n 'docBase' -v 'draw' \
+    -s '/Server/Service/Engine/Host/Context[@path="/"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
+    -s '/Server/Service/Engine/Host' -t 'elem' -n 'Context' \
+    -i '/Server/Service/Engine/Host/Context[not @path="/"]' -t 'attr' -n 'path' -v '/ROOT' \
+    -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'attr' -n 'docBase' -v 'ROOT' \
+    -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
+    conf/server.xml
 
 # Cleanup
 RUN rm -r /var/lib/apt/lists/* && \
