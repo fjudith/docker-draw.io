@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
-ENV VERSION=6.8.0
+ENV VERSION=6.8.5
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet
