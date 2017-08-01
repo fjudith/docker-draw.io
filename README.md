@@ -2,12 +2,9 @@
 
 # Supported tags and respective Dockerfile links
 
-[`6.8.5`, `latest`](https://github.com/fjudith/docker-draw.io/tree/6.8.5)
+[`6.9.6`, `latest`](https://github.com/fjudith/docker-draw.io/tree/6.9.6)
+[`6.8.5`](https://github.com/fjudith/docker-draw.io/tree/6.8.5)
 [`6.8.0`](https://github.com/fjudith/docker-draw.io/tree/6.8.0)
-[`6.7.8`](https://github.com/fjudith/docker-draw.io/tree/6.7.8)
-[`6.5.10`](https://github.com/fjudith/docker-draw.io/tree/6.5.10)
-[`6.5.8`](https://github.com/fjudith/docker-draw.io/tree/6.5.8)
-[`6.5.7`](https://github.com/fjudith/docker-draw.io/tree/6.5.7)
 
 # Introduction
 
