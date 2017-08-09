@@ -15,12 +15,12 @@ RUN cd /tmp && \
 # Patch EmbedServlet2
 ADD assets/embed2js.patch /tmp/draw.io-${VERSION}/war/plugins/
 
-RUN cd /tmp/draw.io-${VERSION} && \
+RUN cd /tmp/drawio-${VERSION} && \
     patch -p1 war/plugins/embed2js.patch && \
-    cd /tmp/draw.io-${VERSION}/etc/build && \
+    cd /tmp/drawio-${VERSION}/etc/build && \
     ant war && \
-    cd /tmp/draw.io-${VERSION}/build && \
-    cp -rp /tmp/draw.io-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
+    cd /tmp/drawio-${VERSION}/build && \
+    cp -rp /tmp/drawio-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
 
 # Update server.xml to set Draw.io webapp to root
 RUN cd $CATALINA_HOME && \
@@ -40,7 +40,7 @@ RUN cd $CATALINA_HOME && \
 RUN rm -r /var/lib/apt/lists/* && \
     rm -rf \
     /tmp/v${VERSION}.zip \
-    /tmp/draw.io-${VERSION}
+    /tmp/drawio-${VERSION}
     
 
 WORKDIR $CATALINA_HOME
