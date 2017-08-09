@@ -17,9 +17,9 @@ ADD assets/embed2js.patch /tmp/draw.io-${VERSION}/war/plugins/
 
 RUN cd /tmp/draw.io-${VERSION} && \
     patch -p1 war/plugins/embed2js.patch && \
-    cd etc/build && \
+    cd /tmp/draw.io-${VERSION}/etc/build && \
     ant war && \
-    cd ../../build && \
+    cd /tmp/draw.io-${VERSION}/build && \
     cp -rp /tmp/draw.io-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
 
 # Update server.xml to set Draw.io webapp to root
