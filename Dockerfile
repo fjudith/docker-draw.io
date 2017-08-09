@@ -13,7 +13,7 @@ RUN cd /tmp && \
     unzip v${VERSION}.zip 
 
 # Patch EmbedServlet2
-ADD assets/embed2js.patch /tmp/draw.io-${VERSION}/war/plugins/
+ADD assets/embed2js.patch /tmp/drawio-${VERSION}/war/plugins/
 
 RUN cd /tmp/drawio-${VERSION} && \
     patch -p1 war/plugins/embed2js.patch && \
