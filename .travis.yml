@@ -18,7 +18,7 @@ services:
 
 before_install:
   - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 --link mysql:mysql $REPO:$TAG
+  - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 $REPO:$TAG
   - docker ps -a
 
 
