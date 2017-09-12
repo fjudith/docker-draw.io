@@ -44,7 +44,7 @@ RUN rm -r /var/lib/apt/lists/* && \
     /tmp/drawio-${VERSION}
 
 # Copy docker-entrypoint
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME

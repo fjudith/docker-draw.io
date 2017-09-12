@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 
 LETS_ENCRYPT_ENABLED=${LETS_ENCRYPT_ENABLED:-false}
 PUBLIC_DNS=${PUBLIC_DNS:-'draw.example.com'}
@@ -9,9 +9,12 @@ TOWN=${TOWN:-'Paris'}
 STATE=${STATE:-'Paris'}
 COUNTRY_CODE=${COUNTRY:-'FR'}
 KEYSTORE_PASS=${KEYSTORE_PASS:-'V3rY1nS3cur3P4ssw0rd'}
-KEY_PASS=${KEYSTORE_PASS:-$STORE_PASS}
+KEY_PASS=${KEYSTORE_PASS:-$KEYSTORE_PASS}
+
 
 if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "true" ]; then
+    echo "Generating Let's Encrypt certificate"
+    
     keytool -genkey -noprompt -alias tomcat -dname "CN=${PUBLIC_DNS}, OU=${ORGANISATION_UNIT}, O=${ORGANISATION}, L=${TOWN}, S=${STATE}, C=${COUNTRY_CODE}" -keystore $CATALINA_HOME/.keystore -storepass "${KEYSTORE_PASS}" -KeySize 2048 -keypass "${KEY_PASS}" -keyalg RSA
 
     keytool -list -keystore $CATALINA_HOME/.keystore -v -storepass "${KEYSTORE_PASS}" > key.check
@@ -20,10 +23,14 @@ if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "true" ]; t
 
     certbot certonly --csr $CATALINA_HOME/request.csr --standalone --register-unsafely-without-email
 
-    keytool -import -trustcacerts -alias tomcat -file 0001_chain.pem -keystore /usr/share/tomcat7/.keystore -storepass "${KEYSTORE_PASS}"
+    keytool -import -trustcacerts -alias tomcat -file 0001_chain.pem -keystore $CATALINA_HOME/.keystore -storepass "${KEYSTORE_PASS}"
 fi
 
 if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "false" ]; then
+    echo "Generating Self-Signed certificate"
+
+    keytool -list -keystore $CATALINA_HOME/.keystore -v -storepass "${KEYSTORE_PASS}"
+
     keytool -genkey -noprompt -alias selfsigned -dname "CN=${PUBLIC_DNS}, OU=${ORGANISATION_UNIT}, O=${ORGANISATION}, L=${TOWN}, S=${STATE}, C=${COUNTRY_CODE}" -keystore $CATALINA_HOME/.keystore -storepass "${KEYSTORE_PASS}" -KeySize 2048 -keypass "${KEY_PASS}" -keyalg RSA -validity 3600
 fi
 
@@ -35,6 +42,8 @@ UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 VAR=$(cat conf/server.xml | grep "$CATALINA_HOME/.keystore")
 
 if [ -z $VAR ]; then
+     echo "Append https connector to server.xml"
+
     xmlstarlet ed \
         -P -S -L \
         -s '/Server/Service' -t 'elem' -n "${UUID}" \
