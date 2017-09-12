@@ -5,7 +5,7 @@ MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 ENV VERSION=7.3.6
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet
+    apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet certbot
 
 # Download
 RUN cd /tmp && \
@@ -42,10 +42,14 @@ RUN rm -r /var/lib/apt/lists/* && \
     rm -rf \
     /tmp/v${VERSION}.zip \
     /tmp/drawio-${VERSION}
-    
+
+# Copy docker-entrypoint
+COPY docker-entrypoint.sh $CATALINA_HOME/
+RUN chmod +x $CATALINA_HOME/docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
 
-EXPOSE 8080
+EXPOSE 8080 8443
 
+ENTRYPOINT ["$CATALINA_HOME/docker-entrypoint.sh"]
 CMD ["catalina.sh", "run"]
