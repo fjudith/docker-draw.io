@@ -44,12 +44,12 @@ RUN rm -r /var/lib/apt/lists/* && \
     /tmp/drawio-${VERSION}
 
 # Copy docker-entrypoint
-COPY docker-entrypoint.sh $CATALINA_HOME/
-RUN chmod +x $CATALINA_HOME/docker-entrypoint.sh
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
 
 EXPOSE 8080 8443
 
-ENTRYPOINT ["$CATALINA_HOME/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["catalina.sh", "run"]

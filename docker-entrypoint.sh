@@ -29,24 +29,27 @@ fi
 
 #<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true" maxThreads="150" scheme="https" secure="true" clientAuth="false" sslProtocol="TLS" KeystoreFile="$CATALINA_HOME/.keystore" KeystorePass="${KEY_PASS}" />
 
-# Update SSL port configuration
+# Update SSL port configuration if it does'nt exists
 #
 UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+VAR=$(cat conf/server.xml | grep "$CATALINA_HOME/.keystore")
 
-xmlstarlet ed \
-    -P -S -L \
-    -s '/Server/Service' -t 'elem' -n "${UUID}" \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'port' -v '8443' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'protocol' -v 'HTTP/1.1' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'SSLEnabled' -v 'true' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'maxThreads' -v '150' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'scheme' -v 'https' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'secure' -v 'true' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'clientAuth' -v 'true' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'sslProtocol' -v 'TLS' \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'KeystoreFile' -v "$CATALINA_HOME/.keystore" \
-    -i "/Server/Service/${UUID}" -t 'attr' -n 'KeystorePass' -v "${KEY_PASS}" \
-    -r "/Server/Service/${UUID}" -v "Connector" \
-conf/server.xml
+if [ -z $VAR ]; then
+    xmlstarlet ed \
+        -P -S -L \
+        -s '/Server/Service' -t 'elem' -n "${UUID}" \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'port' -v '8443' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'protocol' -v 'HTTP/1.1' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'SSLEnabled' -v 'true' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'maxThreads' -v '150' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'scheme' -v 'https' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'secure' -v 'true' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'clientAuth' -v 'true' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'sslProtocol' -v 'TLS' \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'KeystoreFile' -v "$CATALINA_HOME/.keystore" \
+        -i "/Server/Service/${UUID}" -t 'attr' -n 'KeystorePass' -v "${KEY_PASS}" \
+        -r "/Server/Service/${UUID}" -v 'Connector' \
+    conf/server.xml
+fi
 
 exec "$@"
