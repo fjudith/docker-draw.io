@@ -2,7 +2,7 @@
 set -e
 
 LETS_ENCRYPT_ENABLED=${LETS_ENCRYPT_ENABLED:-false}
-PUBLIC_DNS=${PUBLIC_DNS:-'draw.example.com}
+PUBLIC_DNS=${PUBLIC_DNS:-'draw.example.com'}
 ORGANISATION_UNIT=${ORGANIZATION_UNIT:-'Cloud Native Application'}
 ORGANISATION=${ORGANISATION:-'example inc'}
 TOWN=${TOWN:-'Paris'}
