@@ -6,7 +6,7 @@ env:
   - TAG=$(if [ "$TRAVIS_BRANCH" == "master" ]; then
       echo "latest"
     else
-    echo $TRAVIS_BRANCH
+      echo $TRAVIS_BRANCH
     fi)
   # Retreive commit ID
   - COMMIT=${TRAVIS_COMMIT::8}
