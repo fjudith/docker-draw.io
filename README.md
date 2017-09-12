@@ -23,6 +23,9 @@ The Dockerfile builds from "Tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/
 * [x] Deployment as WAR package
 * [x] Use Tomcat instead of apache
 * [x] Patch with EmbedServlet2
+* [x] Implement Self-Signed certificate autogen
+* [ ] Implement Let's encrypt certificate autogen
+* [x] Support SSL Keystore mount to `/user/local/tomcat/.keystore`
 
 ## Quick Start
 
