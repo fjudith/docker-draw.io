@@ -11,7 +11,7 @@ COUNTRY_CODE=${COUNTRY:-'FR'}
 KEYSTORE_PASS=${KEYSTORE_PASS:-'V3rY1nS3cur3P4ssw0rd'}
 KEY_PASS=${KEYSTORE_PASS:-$STORE_PASS}
 
-if ! [ -f $CATALINA_HOME/.keystore ] && [ $LETS_ENCRYPT_ENABLED == true ]; then
+if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "true" ]; then
     keytool -genkey -noprompt -alias tomcat -dname "CN=${PUBLIC_DNS}, OU=${ORGANISATION_UNIT}, O=${ORGANISATION}, L=${TOWN}, S=${STATE}, C=${COUNTRY_CODE}" -keystore $CATALINA_HOME/.keystore -storepass "${KEYSTORE_PASS}" -KeySize 2048 -keypass "${KEY_PASS}" -keyalg RSA
 
     keytool -list -keystore $CATALINA_HOME/.keystore -v -storepass "${KEYSTORE_PASS}" > key.check
@@ -23,7 +23,7 @@ if ! [ -f $CATALINA_HOME/.keystore ] && [ $LETS_ENCRYPT_ENABLED == true ]; then
     keytool -import -trustcacerts -alias tomcat -file 0001_chain.pem -keystore /usr/share/tomcat7/.keystore -storepass "${KEYSTORE_PASS}"
 fi
 
-if ! [ -f $CATALINA_HOME/.keystore ] && [ $LETS_ENCRYPT_ENABLED == false ]; then
+if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "false" ]; then
     keytool -genkey -noprompt -alias selfsigned -dname "CN=${PUBLIC_DNS}, OU=${ORGANISATION_UNIT}, O=${ORGANISATION}, L=${TOWN}, S=${STATE}, C=${COUNTRY_CODE}" -keystore $CATALINA_HOME/.keystore -storepass "${KEYSTORE_PASS}" -KeySize 2048 -keypass "${KEY_PASS}" -keyalg RSA -validity 3600
 fi
 
