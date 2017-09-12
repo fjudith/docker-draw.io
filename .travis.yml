@@ -3,11 +3,7 @@ env:
   # Docker Repository
   - REPO=fjudith/draw.io
   # Compute docker tag
-  - TAG=$(if [ "$TRAVIS_BRANCH" == "master" ]; then
-      echo "latest"
-    else
-      echo $TRAVIS_BRANCH
-    fi)
+  - TAG=$(if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi)
   # Retreive commit ID
   - COMMIT=${TRAVIS_COMMIT::8}
   - secure: "SVMAZYJ/6u4maCFH+Wd7w8OYNGK6wU0EEsafNcMG1R2R6dD9dqbJGEKHjLpsCH61zRNQEVaEfPK8TjVLXWndEK5rFTdZRj6JwzEZbc1lmAZCU6zHpGHcsVOG4fRTnZGl36UUUDqttDKNwYBnJGqAK9J4IsH9KMMFmo9JhsovS+eJfKouFtZ78Q2reeSbjIxKypA9xu/k7TXBLnFM1VBJVOe/BFXHg0YawiuNM2+yudpWzviVL1ipfPYkge1r2BlelidMjnlLsa6uyjz0Lo+XvVtPkMUpiyUPEuLn935hvXvC9cy8ZRXG83f0ZU5ZQ1m6qitEDNmazBPB7egstqb+XbdM0zgLvqwPQOuawRkkf67YUOzZSYreejkzotHUtScHGDRI1JfM+M/dph7VRaRGGXIc453jHQKoWc7v6IqFR1AhSgz2eiEsUBgvmhhwYJuJ7SGsuKQpwl1QAMAr+JlLuU55pPRoOJ8Dkl10H4FNxqLbH9mZ0XZFm4hRKRtk9qQNpgWAxaC+t4EUtIKZxu5VjfWPnVwLlwyt03ke4eEV9E34jAkfFS1L5f6JkFivL/2rmG1dw815paRgHpaCaGbWRpLjgTCWV5lVy9tgYkewmY5LjOcVbRCEHM2Z3AgRrVQtxy1dlvrEZxY3jtvrpgQ91FIW8QMDGd3rB1Kxm3tb4gI="
