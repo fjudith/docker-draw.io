@@ -24,7 +24,7 @@ before_install:
 
 script:
   # Wait for draw.io to start
-  - sleep 60
+  - sleep 10
   - docker logs drawio
   # -i, --include – include protocol headers in the output (H/F)
   # -X, --request – specify request  COMMAND (GET, PUT, DELETE…)  to use
