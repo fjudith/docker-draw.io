@@ -39,7 +39,7 @@ Start a web browser session to http://ip:8080/?offline=1&https=0 or https://ip:8
 
 > `?offline=1` is a security feature that disables support of cloud storage.
 
-## Environmnet variables
+## Environment variables
 
 * **LETS_ENCRYPT_ENABLED**: Enables Let's Encrypt certificate instead of self-signed; default `false`
 * **PUBLIC_DNS**: DNS domain to be used as certificate "CN" record; default `draw.example.com`
