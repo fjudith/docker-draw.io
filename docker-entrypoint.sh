@@ -41,7 +41,7 @@ fi
 UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 VAR=$(cat conf/server.xml | grep "$CATALINA_HOME/.keystore")
 
-if [ -z $VAR ]; then
+if [ -f $CATALINA_HOME/.keystore ] && [ -z $VAR ]; then
      echo "Append https connector to server.xml"
 
     xmlstarlet ed \
