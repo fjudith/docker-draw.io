@@ -33,7 +33,8 @@ pipeline {
                         sh "docker ps -a"
                         sleep 10
                         sh "docker logs drawio"
-                        sh 'docker run -it --rm --link drawio-cicd:drawio blitznote/debootstrap-amd64:17.04 bash -c "http://drawio:8080/"'
+                        sh 'docker run -it --rm --link drawio-cicd:drawio blitznote/debootstrap-amd64:17.04 bash -c "curl -i http://drawio:8080/"'
+                        sh 'docker rm -f drawio-cicd'
                     }
                     post {
                         success {
