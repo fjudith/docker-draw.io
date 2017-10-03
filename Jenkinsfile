@@ -32,7 +32,7 @@ pipeline {
                         sh "docker run -d --name 'drawio-cicd' -p 55080:8080 -p 55443:8443 ${REPO}:${GIT_COMMIT}"
                         sh "docker ps -a"
                         sleep 10
-                        sh "docker logs drawio"
+                        sh "docker logs drawio-cicd"
                         sh 'docker run -it --rm --link drawio-cicd:drawio blitznote/debootstrap-amd64:17.04 bash -c "curl -i http://drawio:8080/"'
                         sh 'docker rm -f drawio-cicd'
                     }
