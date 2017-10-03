@@ -29,7 +29,7 @@ pipeline {
                     steps {
                         sh 'tree -sh'
                         sh "docker build -f Dockerfile -t ${REPO}:${GIT_COMMIT} ."
-                        sh "docker run -d --name 'drawio-cicd' -p 8080:8080 -p 8443:8443 ${REPO}:${GIT_COMMIT}"
+                        sh "docker run -d --name 'drawio-cicd' -p 55080:8080 -p 55443:8443 ${REPO}:${GIT_COMMIT}"
                         sh "docker ps -a"
                         sleep 10
                         sh "docker logs drawio"
