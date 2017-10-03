@@ -29,10 +29,20 @@ pipeline {
                     steps {
                         sh 'tree -sh'
                         sh "docker build -f Dockerfile -t ${REPO}:${GIT_COMMIT} ."
-                        sh "docker tag ${REPO}:${GIT_COMMIT} ${REPO}:${TAG}"
-                        sh "docker tag ${REPO}:${GIT_COMMIT} ${PRIVATE_REPO}:${TAG}"
-                        sh "docker login -u ${DOCKER_PRIVATE_USR} -p ${DOCKER_PRIVATE_PSW} ${PRIVATE_REGISTRY}"
-                        sh "docker push ${PRIVATE_REPO}"
+                        sh "docker run -d --name 'drawio' -p 8080:8080 -p 8443:8443 ${REPO}:${GIT_COMMIT}"
+                        sh "docker ps -a"
+                        sleep 10
+                        sh "docker logs"
+                        sh 'docker run -it --rm --link drawio:drawio blitznote/debootstrap-amd64:17.04 bash -c "http://drawio:8080/"'
+                    }
+                    post {
+                        success {
+                            echo 'Tag and Push to private registry'
+                            sh "docker tag ${REPO}:${GIT_COMMIT} ${REPO}:${TAG}"
+                            sh "docker tag ${REPO}:${GIT_COMMIT} ${PRIVATE_REPO}:${TAG}"
+                            sh "docker login -u ${DOCKER_PRIVATE_USR} -p ${DOCKER_PRIVATE_PSW} ${PRIVATE_REGISTRY}"
+                            sh "docker push ${PRIVATE_REPO}"
+                        }
                     }
                 }
             }
