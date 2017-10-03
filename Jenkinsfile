@@ -29,11 +29,11 @@ pipeline {
                     steps {
                         sh 'tree -sh'
                         sh "docker build -f Dockerfile -t ${REPO}:${GIT_COMMIT} ."
-                        sh "docker run -d --name 'drawio' -p 8080:8080 -p 8443:8443 ${REPO}:${GIT_COMMIT}"
+                        sh "docker run -d --name 'drawio-cicd' -p 8080:8080 -p 8443:8443 ${REPO}:${GIT_COMMIT}"
                         sh "docker ps -a"
                         sleep 10
                         sh "docker logs drawio"
-                        sh 'docker run -it --rm --link drawio:drawio blitznote/debootstrap-amd64:17.04 bash -c "http://drawio:8080/"'
+                        sh 'docker run -it --rm --link drawio-cicd:drawio blitznote/debootstrap-amd64:17.04 bash -c "http://drawio:8080/"'
                     }
                     post {
                         success {
