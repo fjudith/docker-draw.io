@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
-ENV VERSION=7.4.3
+ENV VERSION=7.5.0
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet certbot
