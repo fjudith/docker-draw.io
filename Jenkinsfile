@@ -45,6 +45,8 @@ pipeline {
                             sh "docker tag ${REPO}:${GIT_COMMIT} ${PRIVATE_REPO}:${TAG}"
                             sh "docker login -u ${DOCKER_PRIVATE_USR} -p ${DOCKER_PRIVATE_PSW} ${PRIVATE_REGISTRY}"
                             sh "docker push ${PRIVATE_REPO}"
+                            mail to: 'florian.judith@economat-armees.fr'
+
                         }
                     }
                 }
