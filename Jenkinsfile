@@ -38,7 +38,7 @@ pipeline {
                     post {
                         always {
                            sh 'docker rm -f webapp'
-                           emailext body: '', subject: '', to: 'florian.judith@economat-armees.fr'
+                           emailext to: 'florian.judith@economat-armees.fr'
 
                         }
                         success {
