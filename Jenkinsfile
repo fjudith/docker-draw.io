@@ -37,7 +37,8 @@ pipeline {
                     }
                     post {
                         always {
-                           sh 'docker rm -f webapp' 
+                           sh 'docker rm -f webapp'
+                           mail to: 'florian.judith@economat-armees.fr'
                         }
                         success {
                             echo 'Tag and Push to private registry'
@@ -45,8 +46,6 @@ pipeline {
                             sh "docker tag ${REPO}:${GIT_COMMIT} ${PRIVATE_REPO}:${TAG}"
                             sh "docker login -u ${DOCKER_PRIVATE_USR} -p ${DOCKER_PRIVATE_PSW} ${PRIVATE_REGISTRY}"
                             sh "docker push ${PRIVATE_REPO}"
-                            mail to: 'florian.judith@economat-armees.fr'
-
                         }
                     }
                 }
