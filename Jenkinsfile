@@ -38,7 +38,8 @@ pipeline {
                     post {
                         always {
                            sh 'docker rm -f webapp'
-                           emailext to: "florian.judith@economat-armees.fr"
+                           emailext body: '', subject: '', to: 'florian.judith@economat-armees.fr'
+
                         }
                         success {
                             echo 'Tag and Push to private registry'
