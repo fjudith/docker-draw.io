@@ -61,4 +61,5 @@ if [ -f $CATALINA_HOME/.keystore ] && [ -z $VAR ]; then
     conf/server.xml
 fi
 
+
 exec "$@"
