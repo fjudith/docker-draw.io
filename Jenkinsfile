@@ -29,15 +29,15 @@ pipeline {
                     steps {
                         sh 'tree -sh'
                         sh "docker build -f Dockerfile -t ${REPO}:${GIT_COMMIT} ."
-                        sh "docker run -d --name 'webapp' -p 55080:8080 -p 55443:8443 ${REPO}:${GIT_COMMIT}"
+                        sh "docker run -d --name 'drawio-${BUILD_NUMBER}' -p 55080:8080 -p 55443:8443 ${REPO}:${GIT_COMMIT}"
                         sh "docker ps -a"
                         sleep 10
-                        sh "docker logs webapp"
-                        sh 'docker run --rm --link webapp:drawio blitznote/debootstrap-amd64:17.04 bash -c "curl -v -c - http://drawio:8080/"'
+                        sh "docker logs drawio-${BUILD_NUMBER}"
+                        sh 'docker run --rm --link drawio-${BUILD_NUMBER}:drawio blitznote/debootstrap-amd64:17.04 bash -c "curl -v https://drawio:8443/"'
                     }
                     post {
                         always {
-                           sh 'docker rm -f webapp'
+                           sh 'docker rm -f drawio-${BUILD_NUMBER}'
                         }
                         success {
                             echo 'Tag and Push to private registry'
