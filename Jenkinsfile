@@ -33,7 +33,7 @@ pipeline {
                         sh "docker ps -a"
                         sleep 10
                         sh "docker logs drawio-${BUILD_NUMBER}"
-                        sh 'docker run --rm --link drawio-${BUILD_NUMBER}:drawio blitznote/debootstrap-amd64:17.04 bash -c "curl -k -v https://drawio:8443/"'
+                        sh 'docker run --rm --link drawio-${BUILD_NUMBER}:drawio blitznote/debootstrap-amd64:17.04 bash -c "curl -i http://drawio:8080/"'
                     }
                     post {
                         always {
