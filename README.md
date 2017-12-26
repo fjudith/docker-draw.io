@@ -35,7 +35,9 @@ Run the container.
 docker run -it --rm --name="draw" -p 8080:8080 -p 8443:8443 fjudith/draw.io
 ```
 
-Start a web browser session to http://ip:8080/?offline=1&https=0 or https://ip:8443/?offline=1
+Start a web browser session to http://localhost:8080/?offline=1&https=0 or https://localhost:8443/?offline=1
+
+If you're running `Docker Toolbox` then start a web browser session to http://192.168.99.100:8080/?offline=1&https=0 or https://192.168.99.100:8443/?offline=1
 
 > `?offline=1` is a security feature that disables support of cloud storage.
 
