@@ -9,7 +9,7 @@ CITY=${CITY:-'Paris'}
 STATE=${STATE:-'Paris'}
 COUNTRY_CODE=${COUNTRY:-'FR'}
 KEYSTORE_PASS=${KEYSTORE_PASS:-'V3ry1nS3cur3P4ssw0rd'}
-KEY_PASS=${KEYSTORE_PASS:-$KEYSTORE_PASS}
+KEY_PASS=${KEY_PASS:-$KEYSTORE_PASS}
 
 
 if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "true" ]; then
@@ -35,7 +35,7 @@ if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "false" ]; 
 fi
 
 # Migrate to PKCS12
-keytool -importkeystore -srckeystore /usr/local/tomcat/.keystore -srcstorepass "${KEYSTORE_PASS}" -destkeystore /usr/local/tomcat/.keystore -deststoretype pkcs12 -deststorepass "${KEYSTORE_PASS}"
+keytool -importkeystore -srckeystore /usr/local/tomcat/.keystore -srckeypass "${KEY_PASS}" -srcstorepass "${KEYSTORE_PASS}" -destkeystore /usr/local/tomcat/.keystore -deststoretype pkcs12 -destkeypass "${KEY_PASS}" -deststorepass "${KEYSTORE_PASS}"
 
 # Update SSL port configuration if it does'nt exists
 #
