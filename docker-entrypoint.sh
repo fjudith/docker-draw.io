@@ -37,7 +37,6 @@ fi
 # Migrate to PKCS12
 keytool -importkeystore -srckeystore /usr/local/tomcat/.keystore -srcstorepass "${KEYSTORE_PASS}" -destkeystore /usr/local/tomcat/.keystore -deststoretype pkcs12 -deststorepass "${KEYSTORE_PASS}"
 
-
 # Update SSL port configuration if it does'nt exists
 #
 UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
