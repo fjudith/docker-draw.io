@@ -35,7 +35,7 @@ if ! [ -f $CATALINA_HOME/.keystore ] && [ "$LETS_ENCRYPT_ENABLED" == "false" ]; 
 fi
 
 # Migrate to PKCS12
-keytool -importkeystore -srckeystore /usr/local/tomcat/.keystore -destkeystore /usr/local/tomcat/.keystore -deststoretype pkcs12
+keytool -importkeystore -srckeystore /usr/local/tomcat/.keystore -srcstorepass "${KEYSTORE_PASS}" -destkeystore /usr/local/tomcat/.keystore -deststoretype pkcs12 -deststorepass "${KEYSTORE_PASS}"
 
 
 # Update SSL port configuration if it does'nt exists
