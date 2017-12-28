@@ -36,7 +36,7 @@ fi
 
 # Update SSL port configuration if it does'nt exists
 #
-UUID="$(cat /dev/urandom | tr -dc 'a-zA-Z' | fold -w 1 | head -n 1)$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 7 | head -n 1)"
+UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
 VAR=$(cat conf/server.xml | grep "$CATALINA_HOME/.keystore")
 
 if [ -f $CATALINA_HOME/.keystore ] && [ -z $VAR ]; then
