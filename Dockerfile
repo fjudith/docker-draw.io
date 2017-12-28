@@ -16,7 +16,7 @@ RUN cd /tmp && \
 ADD assets/embed2js.patch /tmp/drawio-${VERSION}/war/plugins/
 
 RUN cd /tmp/drawio-${VERSION} && \
-    patch -p1 war/plugins/embed2js.patch && \
+    patch -p1 < war/plugins/embed2js.patch && \
     cd /tmp/drawio-${VERSION}/etc/build && \
     ant war && \
     cd /tmp/drawio-${VERSION}/build && \
