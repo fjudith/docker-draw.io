@@ -21,7 +21,6 @@ RUN cd /tmp/drawio-${VERSION} && \
     ant war && \
     cd /tmp/drawio-${VERSION}/build && \
     unzip /tmp/drawio-${VERSION}/build/draw.war -d $CATALINA_HOME/webapps/draw
-    #cp -rp /tmp/drawio-${VERSION}/build/draw.war $CATALINA_HOME/webapps/
 
 # Update server.xml to set Draw.io webapp to root
 RUN cd $CATALINA_HOME && \
