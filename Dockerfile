@@ -10,13 +10,9 @@ RUN apt-get update -y && \
 # Download
 RUN cd /tmp && \
     wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
-    unzip v${VERSION}.zip 
-
-# Patch EmbedServlet2
-ADD assets/embed2js.patch /tmp/drawio-${VERSION}/war/plugins/
+    unzip v${VERSION}.zip
 
 RUN cd /tmp/drawio-${VERSION} && \
-    patch -p1 < war/plugins/embed2js.patch && \
     cd /tmp/drawio-${VERSION}/etc/build && \
     ant war && \
     cd /tmp/drawio-${VERSION}/build && \
