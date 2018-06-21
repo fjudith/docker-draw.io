@@ -3,7 +3,7 @@
 
 # Supported tags and respective Dockerfile links
 
-[`8.8.1`, `latest`](https://github.com/fjudith/docker-draw.io/tree/8.8.1)
+[`8.8.4`, `latest`](https://github.com/fjudith/docker-draw.io/tree/8.8.4)
 
 # Introduction
 
