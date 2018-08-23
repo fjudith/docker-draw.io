@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 
-ENV VERSION=8.9.9
+ENV VERSION=9.0.6
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet certbot
