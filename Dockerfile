@@ -5,18 +5,23 @@ LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 ENV VERSION=9.0.8
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-8-jdk ant git patch xmlstarlet certbot
-
-# Download
-RUN cd /tmp && \
+    apt-get install -y --no-install-recommends \
+        openjdk-8-jdk ant git patch xmlstarlet certbot && \
+    cd /tmp && \
     wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
-    unzip v${VERSION}.zip
-
-RUN cd /tmp/drawio-${VERSION} && \
+    unzip v${VERSION}.zip && \
+    cd /tmp/drawio-${VERSION} && \
     cd /tmp/drawio-${VERSION}/etc/build && \
     ant war && \
     cd /tmp/drawio-${VERSION}/build && \
-    unzip /tmp/drawio-${VERSION}/build/draw.war -d $CATALINA_HOME/webapps/draw
+    unzip /tmp/drawio-${VERSION}/build/draw.war -d $CATALINA_HOME/webapps/draw && \
+    apt-get remove -y --purge openjdk-8-jdk ant git patch && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -r /var/lib/apt/lists/* && \
+    rm -rf \
+        /tmp/v${VERSION}.zip \
+        /tmp/drawio-${VERSION}
 
 # Update server.xml to set Draw.io webapp to root
 RUN cd $CATALINA_HOME && \
@@ -32,11 +37,6 @@ RUN cd $CATALINA_HOME && \
     -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
     conf/server.xml
 
-# Cleanup
-RUN rm -r /var/lib/apt/lists/* && \
-    rm -rf \
-    /tmp/v${VERSION}.zip \
-    /tmp/drawio-${VERSION}
 
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
