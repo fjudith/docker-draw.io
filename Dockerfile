@@ -2,7 +2,7 @@ FROM tomcat:8-jre8
 
 LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 
-ENV VERSION=9.1.8
+ENV VERSION=9.2.3
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
