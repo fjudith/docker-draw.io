@@ -11,7 +11,7 @@ draw.io (formerly Diagramly) is free online diagram software. You can use it as 
 
 # Description
 
-The Dockerfile builds from "Tomcat:8-jre7" (see https://hub.docker.com/_/tomcat/)
+The Dockerfile builds from `tomcat:9-jre10-slim` (see https://hub.docker.com/_/tomcat/)
 
 **This image does not leverage embedded database**
 
