@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: drawio
+  namespace: default
+spec:
+  gateways:
+  - istio-gateway
+  hosts:
+  - 'draw.example.com'
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: drawio.drawio.svc.cluster.local
+        port:
+          number: 8080
+---
