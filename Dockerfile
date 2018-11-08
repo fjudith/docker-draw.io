@@ -6,7 +6,7 @@ ENV VERSION=9.3.1
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        openjdk-10-jdk-headless ant git patch wget xmlstarlet certbot && \
+        openjdk-10-jdk-headless ant git patch wget xmlstarlet certbot curl && \
     cd /tmp && \
     wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
     unzip v${VERSION}.zip && \
