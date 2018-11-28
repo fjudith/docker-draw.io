@@ -13,6 +13,7 @@ RUN apk add \
     cd /tmp/drawio-${VERSION}/etc/build && \
     ant war && \
     cd /tmp/drawio-${VERSION}/build && \
+    mkdir -p $CATALINA_HOME/webapps/draw && \
     unzip /tmp/drawio-${VERSION}/build/draw.war -d $CATALINA_HOME/webapps/draw && \
     apk del --purge openjdk8 apache-ant git patch && \
     rm -rf \
