@@ -3,7 +3,7 @@
 
 # Supported tags and respective Dockerfile links
 
-[`9.6.1`, `latest`](https://github.com/fjudith/docker-draw.io/tree/9.6.1)
+[`9.5.3`, `latest`](https://github.com/fjudith/docker-draw.io/tree/9.5.3)
 
 # Introduction
 
@@ -11,7 +11,7 @@ draw.io (formerly Diagramly) is free online diagram software. You can use it as 
 
 # Description
 
-The Dockerfile builds from `tomcat:9-jre10-slim` (see https://hub.docker.com/_/tomcat/)
+The Dockerfile builds from `tomcat:9-jre11-slim` and `tomcat:9-jre8-alpine (see https://hub.docker.com/_/tomcat/)
 
 **This image does not leverage embedded database**
 
