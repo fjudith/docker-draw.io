@@ -4,8 +4,8 @@
 
 # Supported tags and respective Dockerfile links
 
-[`10.0.18`, `latest`](https://github.com/fjudith/docker-draw.io/tree/10.0.18/debian)
-[`10.0.18-alpine`, `alpine`](https://github.com/fjudith/docker-draw.io/tree/10.0.18/alpine)
+[`10.0.20`, `latest`](https://github.com/fjudith/docker-draw.io/tree/10.0.20/debian)
+[`10.0.20-alpine`, `alpine`](https://github.com/fjudith/docker-draw.io/tree/10.0.20/alpine)
 
 # Introduction
 
