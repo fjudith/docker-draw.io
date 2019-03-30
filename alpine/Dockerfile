@@ -2,7 +2,7 @@ FROM tomcat:9-jre8-alpine
 
 LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 
-ARG VERSION=10.5.7
+ARG VERSION=10.5.8
 
 RUN apk add \
     openjdk8 apache-ant git patch xmlstarlet certbot curl && \
