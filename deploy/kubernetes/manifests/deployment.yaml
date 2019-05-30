@@ -1,19 +1,24 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drawio
   namespace: drawio
+  labels:
+    app: draw.io
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: draw.io
   template:
     metadata:
       labels:
         app: draw.io
     spec:
       containers:
-      - image: docker.io/fjudith/draw.io:10.7.0-alpine
-        imagePullPolicy: IfNotPresent
-        name: drawio
-        ports:
-        - containerPort: 8080
+        - image: index.docker.io/fjudith/draw.io
+          imagePullPolicy: IfNotPresent
+          name: drawio
+          ports:
+            - containerPort: 8080
 ---
