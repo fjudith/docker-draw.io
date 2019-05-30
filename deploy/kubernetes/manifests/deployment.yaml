@@ -11,7 +11,7 @@ spec:
         app: draw.io
     spec:
       containers:
-      - image: docker.io/fjudith/draw.io:10.6.5-alpine
+      - image: index.docker.io/fjudith/draw.io:10.6.5-alpine
         imagePullPolicy: IfNotPresent
         name: drawio
         ports:
