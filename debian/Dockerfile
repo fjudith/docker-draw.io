@@ -2,7 +2,7 @@ FROM tomcat:9-jre11-slim
 
 LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 
-ARG VERSION=10.7.5
+ARG VERSION=10.7.7
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
