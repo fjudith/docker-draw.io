@@ -1,27 +1,22 @@
 FROM tomcat:9-jre11-slim
 
-LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
-
-ARG VERSION=11.3.0
+LABEL maintainer="JGraph Ltd"
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         openjdk-11-jdk-headless ant git patch wget xmlstarlet certbot curl && \
     cd /tmp && \
-    wget https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
-    unzip v${VERSION}.zip && \
-    cd /tmp/drawio-${VERSION} && \
-    cd /tmp/drawio-${VERSION}/etc/build && \
+    git clone https://github.com/jgraph/drawio.git && \
+    cd /tmp/drawio/etc/build && \
     ant war && \
-    cd /tmp/drawio-${VERSION}/build && \
-    unzip /tmp/drawio-${VERSION}/build/draw.war -d $CATALINA_HOME/webapps/draw && \
+    cd /tmp/drawio/build && \
+    unzip /tmp/drawio/build/draw.war -d $CATALINA_HOME/webapps/draw && \
     apt-get remove -y --purge openjdk-11-jdk-headless ant git patch wget && \
     apt-get autoremove -y --purge && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/* && \
     rm -rf \
-        /tmp/v${VERSION}.zip \
-        /tmp/drawio-${VERSION}
+        /tmp/drawio
 
 # Update server.xml to set Draw.io webapp to root
 RUN cd $CATALINA_HOME && \
@@ -37,7 +32,8 @@ RUN cd $CATALINA_HOME && \
     -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
     conf/server.xml
 
-
+# Copy draw.io config files
+COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
