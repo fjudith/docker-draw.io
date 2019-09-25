@@ -4,7 +4,11 @@ LABEL maintainer="JGraph Ltd"
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        chromium libatk-bridge2.0-0 libgtk-3-0 && \
+        software-properties-common chromium libatk-bridge2.0-0 libgtk-3-0 && \
+    apt-add-repository contrib && \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        ttf-mscorefonts-installer && \
     mkdir /usr/local/drawio && \
     cd /usr/local/drawio && \
     git clone https://github.com/jgraph/draw-image-export2.git && \
