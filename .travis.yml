@@ -1,15 +1,11 @@
 env:
   global:
   # Docker Repository
-  - REPO=fjudith/draw.io
+  - REPO=jgraph/drawio
   # Compute docker tag
   - TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "alpine"; else echo $TRAVIS_BRANCH-alpine ; fi`
-  # Retreive commit ID
-  - COMMIT=${TRAVIS_COMMIT::8}
-  - secure: "WZIi3H8GGGZcA6GgUVcoJLWHjev+4tRJCbJTBkpbqoLIf8Y565plPwfAc/ez+Gt+FNm7eX5tVoneE3IHQeQaRQPeE+JdeB2AnB6TlwGXhHRR+d6bRVo3BOsyz6dRx+Qlhq7FkmzpPI30DXopG2YW1k3b4o8KthcCby9meP5EP6gjWse3SBiGfd17KWcrqWHozpEXJleW8Vf4Ldr4msOICAD0YRex4KmjVacdgaBhKx4WkM5VzF1QOWSpyY3TVnmnU1H+oWaxlG49wmC2OmMBJ+Ak+TpfH6CEftBOqNFEeHziCvFlrXIVdv+2kDtByUqZF2GmVyiWA7H74mxROAFzJpRsBpyRMStRvPgJszUfeGP7hH/nFBcBy35Dq7zQXbEd9fYzQrfNVTn0Wsfczo34YN9A/cvlpEW7RAAXcmI6T7VHvTXqkcJmmsqI/yYMHzi7vihmYLW8ck64oNKh41jPfsxfT6BGHtOohx5/BDu1UYV1Mid1+kTq2OmToO+obUdRRI9rnPd+F7jDBD8hAGsxCTYoxUfQqGRytJR7/RWOY5/Ebx2kYPgl7sUGXc+pRJrqAlw2XImjgg2hFjFxUNcxeEknu+b6ieNY1aWVC1rxkO+9cr5AYmV84L3RmIiSbmL8HMBi3B41BHJ2h/7aQf7aR0S2zRbcnp0tQGz9Fyt4zkg="
-  - secure: "YWRTBvw6dXBhKqvDL5Orl3X9I2BuDSNZO3tmitugMcpYwuT/LacKcDSfveWRnhSP2sTL+ODmxbRoJwCGfTbEFf8MMXy83eH/NlzNzo5AFxxGX7VUsoVlyTI008KZPtktCt77YedvJaNG6bVMgqGpZAZ8/aXCHpUAVtOENFW9l0S/InZ9L7byCemrnHGyniapwS1wnWUalW8X0/QE9tNbEjPLVlTBVFjVIkLkBn8ACFLQDwnFB1fNtEzqBesKY4no1RUSu2HFma7glffL4g0VDF6aCvk5xA0+3rfjI8nvI5dZzapfedNRVakmDHXivooepoUzG1OU5l8gS1+1STnrw1kBul4SLBbcgTZSgwuHLU7tMHheK/zNb55GhsUF+mpWu6CVmABAkGmHzNHq+kh9iUx3BaoEwZwS9NrOsgMgaii9rPAtxgiPom/YseRg6Q3KwhJPak0/8yKA/DH6Fz8gugLmLpcL7PgRRyFSEzj5o53W9Z2aTfyFo56hB22otgvcFpHWAXyIGdhd/fXm9zInCZIJsOEGZ/wu8hFnSL6oMGMM4FG2sRNmRaRTLD5lmdlVAnZAKwqRZkjfbA0I7ijBzrPIi4J5jnLFR2iVrEwLo90E4J+2Wbeu2+ewQNJYQv0cLUjlu5mBY7FFycy9vfshaAUijOp2nJ05/8Oq4LZfiCo="
-
+  - VERSION=11.3.1
   
 sudo: required
 services:
@@ -17,10 +13,10 @@ services:
 
 
 before_install:
-  - docker build -f debian/Dockerfile -t $REPO:$COMMIT debian/
-  - docker build -f alpine/Dockerfile -t $REPO:$COMMIT-alpine alpine/
-  - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 $REPO:$COMMIT
-  - docker run --name 'drawio-alpine' -d -p 32735:8080 -p 32736:8443 $REPO:$COMMIT-alpine
+  - docker build -f debian/Dockerfile -t $REPO:$VERSION debian/
+  - docker build -f alpine/Dockerfile -t $REPO:$VERSION-alpine alpine/
+  - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 $REPO:$VERSION
+  - docker run --name 'drawio-alpine' -d -p 32735:8080 -p 32736:8443 $REPO:$VERSION-alpine
   - docker ps -a
 
 
@@ -36,9 +32,9 @@ script:
 
 
 after_success:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT-alpine $REPO:$ALPINE_TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker tag $REPO:$COMMIT-alpine $REPO:travis-$TRAVIS_BUILD_NUMBER-alpine
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+  - docker tag $REPO:$VERSION $REPO:$TAG
+  - docker tag $REPO:$VERSION-alpine $REPO:$ALPINE_TAG
+  #- docker tag $REPO:$VERSION $REPO:travis-$TRAVIS_BUILD_NUMBER
+  #- docker tag $REPO:$VERSION-alpine $REPO:travis-$TRAVIS_BUILD_NUMBER-alpine
   - docker push $REPO

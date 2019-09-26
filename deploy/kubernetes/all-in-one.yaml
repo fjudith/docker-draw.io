@@ -38,7 +38,7 @@ spec:
         app: draw.io
     spec:
       containers:
-      - image: docker.io/fjudith/draw.io:alpine
+      - image: docker.io/jgraph/drawio:alpine
         imagePullPolicy: IfNotPresent
         name: drawio
         ports:

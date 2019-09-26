@@ -25,7 +25,7 @@ The Dockerfile builds from `tomcat:9-jre11-slim` and `tomcat:9-jre8-alpine (see 
 * [x] Use Tomcat instead of apache
 * [x] Patch with EmbedServlet2
 * [x] Self-Signed certificate autogen
-* [ ] Let's encrypt certificate autogen
+* [x] Let's encrypt certificate autogen
 * [x] Support SSL Keystore mount to `/user/local/tomcat/.keystore`
 
 ## Quick Start
@@ -33,7 +33,7 @@ The Dockerfile builds from `tomcat:9-jre11-slim` and `tomcat:9-jre8-alpine (see 
 Run the container.
 
 ```bash
-docker run -it --rm --name="draw" -p 8080:8080 -p 8443:8443 fjudith/draw.io
+docker run -it --rm --name="draw" -p 8080:8080 -p 8443:8443 jgraph/draw.io
 ```
 
 Start a web browser session to <http://localhost:8080/?offline=1&https=0> or <https://localhost:8443/?offline=1>
