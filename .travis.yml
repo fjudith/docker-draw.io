@@ -5,7 +5,6 @@ env:
   # Compute docker tag
   - TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "alpine"; else echo $TRAVIS_BRANCH-alpine ; fi`
-  - VERSION=11.3.1
   
 sudo: required
 services:
@@ -13,6 +12,9 @@ services:
 
 
 before_install:
+  # Get draw.io current latest version
+  - wget https://raw.githubusercontent.com/jgraph/drawio/master/VERSION
+  - export VERSION=`cat VERSION`
   - docker build -f debian/Dockerfile -t $REPO:$VERSION debian/
   - docker build -f alpine/Dockerfile -t $REPO:$VERSION-alpine alpine/
   - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 $REPO:$VERSION
