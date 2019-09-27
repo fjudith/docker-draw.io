@@ -15,6 +15,9 @@ before_install:
   # Get draw.io current latest version
   - wget https://raw.githubusercontent.com/jgraph/drawio/master/VERSION
   - export VERSION=`cat VERSION`
+   # Compute docker tag again if this branch is the latest
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "v$VERSION" ]; then echo "latest"; else echo $TAG ; fi`
+  - export ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "v$VERSION" ]; then echo "alpine"; else echo $ALPINE_TAG ; fi` 
   - docker build -f debian/Dockerfile -t $REPO:$VERSION debian/
   - docker build -f alpine/Dockerfile -t $REPO:$VERSION-alpine alpine/
   - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 $REPO:$VERSION
@@ -37,6 +40,4 @@ after_success:
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
   - docker tag $REPO:$VERSION $REPO:$TAG
   - docker tag $REPO:$VERSION-alpine $REPO:$ALPINE_TAG
-  #- docker tag $REPO:$VERSION $REPO:travis-$TRAVIS_BUILD_NUMBER
-  #- docker tag $REPO:$VERSION-alpine $REPO:travis-$TRAVIS_BUILD_NUMBER-alpine
   - docker push $REPO

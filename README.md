@@ -1,13 +1,5 @@
-# Docker-Draw.io
-
-[![Get your own image badge on microbadger.com](https://images.microbadger.com/badges/image/fjudith/draw.io.svg)](https://microbadger.com/images/fjudith/draw.io)
-[![Build Status](https://travis-ci.org/fjudith/docker-draw.io.svg?branch=master)](https://travis-ci.org/fjudith/docker-draw.io)
-[![Docker Repository on Quay](https://quay.io/repository/fjudith/draw.io/status "Docker Repository on Quay")](https://quay.io/repository/fjudith/draw.io)
-
-## Supported tags and respective Dockerfile links
-
-* [`11.3.0`, `latest`](https://github.com/fjudith/docker-draw.io/tree/11.3.0/debian)
-* [`11.3.0-alpine`, `alpine`](https://github.com/fjudith/docker-draw.io/tree/11.3.0/alpine)
+[![](https://images.microbadger.com/badges/version/jgraph/drawio.svg)](https://microbadger.com/images/jgraph/drawio "Get your own version badge on microbadger.com")
+[![Build Status](https://travis-ci.com/jgraph/docker-drawio.svg?branch=master)](https://travis-ci.com/jgraph/docker-drawio)
 
 ## Introduction
 
@@ -15,18 +7,16 @@
 
 ## Description
 
-The Dockerfile builds from `tomcat:9-jre11-slim` and `tomcat:9-jre8-alpine (see <https://hub.docker.com/_/tomcat/>)
+The Dockerfile builds from `tomcat:9-jre11-slim` and `tomcat:9-jre8-alpine` (see <https://hub.docker.com/_/tomcat/>)
 
-**This image does not leverage embedded database**.
+Forked from [fjudith/draw.io](https://github.com/fjudith/docker-draw.io)
 
-## Roadmap
+## Features
 
-* [x] Deployment as WAR package
-* [x] Use Tomcat instead of apache
-* [x] Patch with EmbedServlet2
-* [x] Self-Signed certificate autogen
-* [x] Let's encrypt certificate autogen
-* [x] Support SSL Keystore mount to `/user/local/tomcat/.keystore`
+* Based on Tomcat so it can be used directly or behind a reverse-proxy
+* Self-Signed certificate autogen
+* Let's encrypt certificate autogen
+* Support SSL Keystore mount to `/user/local/tomcat/.keystore`
 
 ## Quick Start
 
@@ -57,4 +47,3 @@ If you're running `Docker Toolbox` then start a web browser session to <http://1
 ## Reference
 
 * <https://github.com/jgraph/draw.io>
-* <https://github.com/mikitex70/redmine_drawio>
