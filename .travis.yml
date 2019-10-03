@@ -17,10 +17,10 @@ services:
 
 
 before_install:
-  - docker build -f debian/Dockerfile -t tmp:${COMMIT} debian/
-  - docker build -f alpine/Dockerfile -t tmp:${COMMIT}-alpine alpine/
-  - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 tmp:${COMMIT}
-  - docker run --name 'drawio-alpine' -d -p 32735:8080 -p 32736:8443 tmp:${COMMIT}-alpine
+  - docker build -f debian/Dockerfile -t ${REPO}:${COMMIT} debian/
+  - docker build -f alpine/Dockerfile -t ${REPO}:${COMMIT}-alpine alpine/
+  - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 ${REPO}:${COMMIT}
+  - docker run --name 'drawio-alpine' -d -p 32735:8080 -p 32736:8443 ${REPO}:${COMMIT}-alpine
   - docker ps -a
 
 
@@ -37,10 +37,10 @@ script:
 
 after_success:
   - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-  - docker tag tmp:${COMMIT} ${REPO}:${TAG}
-  - docker tag tmp:${COMMIT}-alpine ${REPO}:${ALPINE_TAG}
-  - docker tag tmp:${COMMIT} ${REPO}:${TRAVIS_TAG}
-  - docker tag tmp:${COMMIT} ${REPO}:${TRAVIS_TAG}-alpine
+  - docker tag ${REPO}:${COMMIT} ${REPO}:${TAG}
+  - docker tag ${REPO}:${COMMIT}-alpine ${REPO}:${ALPINE_TAG}
+  - docker tag ${REPO}:${COMMIT} ${REPO}:${TRAVIS_TAG}
+  - docker tag ${REPO}:${COMMIT} ${REPO}:${TRAVIS_TAG}-alpine
   # - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
   # - docker tag $REPO:$COMMIT-alpine $REPO:travis-$TRAVIS_BUILD_NUMBER-alpine
   - docker push ${REPO}
