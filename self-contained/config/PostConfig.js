@@ -8,3 +8,10 @@ window.EMF_CONVERT_URL = '/convert'; //This requires subscription with cloudconv
 window.ICONSEARCH_PATH = null;
 EditorUi.enablePlantUml = true; //Enables PlantUML
 DrawioFile.SYNC = 'none'; //Disable real-time sync
+EditorUi.enableLogging = false; //Disable logging
+
+//Treat this domain as a draw.io domain
+App.prototype.isDriveDomain = function()
+{
+	return true;
+}

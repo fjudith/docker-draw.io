@@ -30,6 +30,12 @@ window.DRAWIO_CONFIG = null; //Replace with your custom draw.io configurations. 
 
 //External service configurations. There are other configurations files needed also as follows
 
+//Disable unsupported services
+urlParams['db'] = '0'; //dropbox
+urlParams['gh'] = '0'; //github
+urlParams['gl'] = '0'; //gitlab
+urlParams['tr'] = '0'; //trello
+
 /**
  * Google Drive 
  */
