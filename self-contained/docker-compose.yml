@@ -1,0 +1,44 @@
+version: '3'
+services:
+  plantuml-server:
+    image: plantuml/plantuml-server
+    expose:
+      - "8080"
+    networks:
+      - drawionet
+    volumes:
+      - ./fonts:/usr/share/fonts/drawio
+  image-export:
+    image: jgraph/export-server
+    expose:
+      - "8000"
+    networks:
+      - drawionet
+    volumes:
+      - ./fonts:/usr/share/fonts/drawio
+  drawio:
+    image: jgraph/drawio
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    depends_on:
+      - plantuml-server
+      - image-export
+    networks:
+      - drawionet
+    volumes:
+      - ./config/PostConfig.js:/usr/local/tomcat/webapps/draw/js/PostConfig.js
+      - ./config/PreConfig.js:/usr/local/tomcat/webapps/draw/js/PreConfig.js
+      - ./config/cloud_convert_api_key:/usr/local/tomcat/webapps/draw/WEB-INF/cloud_convert_api_key
+      - ./config/github_client_secret:/usr/local/tomcat/webapps/draw/WEB-INF/github_client_secret
+      - ./config/google_client_id:/usr/local/tomcat/webapps/draw/WEB-INF/google_client_id
+      - ./config/google_client_redirect_uri:/usr/local/tomcat/webapps/draw/WEB-INF/google_client_redirect_uri
+      - ./config/google_client_secret:/usr/local/tomcat/webapps/draw/WEB-INF/google_client_secret
+      - ./config/msgraph_client_id:/usr/local/tomcat/webapps/draw/WEB-INF/msgraph_client_id
+      - ./config/msgraph_client_redirect_uri:/usr/local/tomcat/webapps/draw/WEB-INF/msgraph_client_redirect_uri
+      - ./config/msgraph_client_secret:/usr/local/tomcat/webapps/draw/WEB-INF/msgraph_client_secret
+    environment:
+      - PLANTUML_URL=http://plantuml-server:8080/
+      - EXPORT_URL=http://image-export:8000/
+networks:
+  drawionet:
