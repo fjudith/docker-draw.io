@@ -41,3 +41,4 @@ after_success:
   - docker tag $REPO:$VERSION $REPO:$TAG
   - docker tag $REPO:$VERSION-alpine $REPO:$ALPINE_TAG
   - docker push $REPO
+  - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
