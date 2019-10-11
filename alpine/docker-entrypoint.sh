@@ -12,6 +12,7 @@ KEYSTORE_PASS=${KEYSTORE_PASS:-'V3ry1nS3cur3P4ssw0rd'}
 KEY_PASS=${KEY_PASS:-$KEYSTORE_PASS}
 
 echo "Init PreConfig.js"
+echo "" >> $CATALINA_HOME/webapps/draw/js/PreConfig.js
 echo "window.DRAWIO_GITLAB_URL = '${DRAWIO_GITLAB_URL}'; " >> $CATALINA_HOME/webapps/draw/js/PreConfig.js
 echo "window.DRAWIO_GITLAB_ID = '${DRAWIO_GITLAB_ID}'; " >> $CATALINA_HOME/webapps/draw/js/PreConfig.js
 cat $CATALINA_HOME/webapps/draw/js/PreConfig.js

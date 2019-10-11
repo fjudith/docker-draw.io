@@ -4,10 +4,11 @@ LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 
 ARG VERSION=12.0.0
 
-RUN apk add \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk add \
     openjdk8 apache-ant git patch xmlstarlet certbot curl && \
     cd /tmp && \
-    curl -OL https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
+    curl --socks5 172.25.16.1:1070 -OL https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
     unzip v${VERSION}.zip && \
     cd /tmp/drawio-${VERSION} && \
     cd /tmp/drawio-${VERSION}/etc/build && \
