@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: draw.io
-        version: 12.0.0
+        version: 12.1.0
     spec:
       containers:
         - image: index.docker.io/fjudith/draw.io
