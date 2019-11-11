@@ -1,5 +1,6 @@
-[![](https://images.microbadger.com/badges/version/jgraph/drawio.svg)](https://microbadger.com/images/fjudith/draw.io "Get your own version badge on microbadger.com")
-[![Build Status](https://travis-ci.com/jgraph/docker-drawio.svg?branch=master)](https://travis-ci.com/fjudith/docker-draw.io)
+[![Get your own image badge on microbadger.com](https://images.microbadger.com/badges/image/fjudith/draw.io.svg)](https://microbadger.com/images/fjudith/draw.io)
+[![Build Status](https://travis-ci.org/fjudith/docker-draw.io.svg?branch=master)](https://travis-ci.org/fjudith/docker-draw.io)
+[![Docker Repository on Quay](https://quay.io/repository/fjudith/draw.io/status "Docker Repository on Quay")](https://quay.io/repository/fjudith/draw.io)
 
 ## Introduction
 
