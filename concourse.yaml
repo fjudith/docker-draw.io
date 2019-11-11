@@ -1,0 +1,43 @@
+# fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' -v 'docker-hub-email=<email>' -v 'docker-hub-username=<username>' -v 'docker-hub-password=<password>' -v 'docker-hub-repo=<organisation>'
+resources:
+  - name: docker-draw.io
+    type: git
+    source:
+      uri: https://github.com/fjudith/docker-draw.io.git
+      branch: master
+
+  - name: draw.io
+    type: docker-image
+    source:
+      email: ((docker-hub-email))
+      username: ((docker-hub-username))
+      password: ((docker-hub-password))
+      repository: ((docker-hub-repo))/draw.io
+      tag: latest
+
+  - name: draw.io-alpine
+    type: docker-image
+    source:
+      email: ((docker-hub-email))
+      username: ((docker-hub-username))
+      password: ((docker-hub-password))
+      repository: ((docker-hub-repo))/draw.io
+      tag: alpine
+
+jobs:
+  - name: publish-debian
+    public: true
+    plan:
+    - get: docker-draw.io
+      trigger: true
+    - put: draw.io
+      params:
+        build: docker-draw.io/debian
+  - name: publish-alpine
+    public: true
+    plan:
+    - get: docker-draw.io
+      trigger: true
+    - put: draw.io-alpine
+      params:
+        build: docker-draw.io/alpine
