@@ -1,7 +1,7 @@
 env:
   global:
   # Docker Repository
-  - REPO=fjudith/drawio
+  - REPO=fjudith/draw.io
   # Compute docker tag
   - TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "alpine"; else echo $TRAVIS_BRANCH-alpine ; fi`
