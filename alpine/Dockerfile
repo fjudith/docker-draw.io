@@ -1,24 +1,19 @@
 FROM tomcat:9-jre8-alpine
 
-LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
-
-ARG VERSION=12.2.3
+LABEL maintainer="Florian JUDITH <florian.judith@gmail.com>"
 
 RUN apk add \
     openjdk8 apache-ant git patch xmlstarlet certbot curl && \
     cd /tmp && \
-    curl -OL https://github.com/jgraph/draw.io/archive/v${VERSION}.zip && \
-    unzip v${VERSION}.zip && \
-    cd /tmp/drawio-${VERSION} && \
-    cd /tmp/drawio-${VERSION}/etc/build && \
+    git clone https://github.com/jgraph/drawio.git && \
+    cd /tmp/drawio/etc/build && \
     ant war && \
-    cd /tmp/drawio-${VERSION}/build && \
+    cd /tmp/drawio/build && \
     mkdir -p $CATALINA_HOME/webapps/draw && \
-    unzip /tmp/drawio-${VERSION}/build/draw.war -d $CATALINA_HOME/webapps/draw && \
+    unzip /tmp/drawio/build/draw.war -d $CATALINA_HOME/webapps/draw && \
     apk del --purge openjdk8 apache-ant git patch && \
     rm -rf \
-        /tmp/v${VERSION}.zip \
-        /tmp/drawio-${VERSION}
+        /tmp/drawio
 
 # Update server.xml to set Draw.io webapp to root
 RUN cd $CATALINA_HOME && \
@@ -34,7 +29,8 @@ RUN cd $CATALINA_HOME && \
     -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
     conf/server.xml
 
-
+# Copy draw.io config files
+COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
