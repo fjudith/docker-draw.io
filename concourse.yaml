@@ -6,7 +6,7 @@ resources:
       uri: https://github.com/fjudith/docker-draw.io.git
       branch: master
 
-  - name: draw.io
+  - name: draw.io:latest
     type: docker-image
     source:
       email: ((docker-hub-email))
@@ -15,7 +15,7 @@ resources:
       repository: ((docker-hub-repo))/draw.io
       tag: latest
 
-  - name: draw.io-alpine
+  - name: draw.io:alpine
     type: docker-image
     source:
       email: ((docker-hub-email))
@@ -30,7 +30,7 @@ jobs:
     plan:
     - get: docker-draw.io
       trigger: true
-    - put: draw.io
+    - put: draw.io:latest
       params:
         build: docker-draw.io/debian
   - name: publish-alpine
@@ -38,6 +38,6 @@ jobs:
     plan:
     - get: docker-draw.io
       trigger: true
-    - put: draw.io-alpine
+    - put: draw.io:alpine
       params:
         build: docker-draw.io/alpine
