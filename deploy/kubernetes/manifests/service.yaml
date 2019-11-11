@@ -17,3 +17,4 @@ spec:
     port: 8080
   selector:
     app: draw.io
+---
