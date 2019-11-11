@@ -1,0 +1,36 @@
+version: '3'
+services:
+  plantuml-server:
+    image: plantuml/plantuml-server
+    expose:
+      - "8080"
+    networks:
+      - drawionet
+    volumes:
+      - ./fonts:/usr/share/fonts/drawio
+  image-export:
+    image: jgraph/export-server
+    expose:
+      - "8000"
+    networks:
+      - drawionet
+    volumes:
+      - ./fonts:/usr/share/fonts/drawio
+  drawio:
+    image: jgraph/drawio
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    depends_on:
+      - plantuml-server
+      - image-export
+    networks:
+      - drawionet
+    volumes:
+      - ./PostConfig.js:/usr/local/tomcat/webapps/draw/js/PostConfig.js
+      - ./PreConfig.js:/usr/local/tomcat/webapps/draw/js/PreConfig.js
+    environment:
+      - PLANTUML_URL=http://plantuml-server:8080/
+      - EXPORT_URL=http://image-export:8000/
+networks:
+  drawionet:

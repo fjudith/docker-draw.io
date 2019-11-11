@@ -1,2 +1,3 @@
 dist/
 .jenkins
+deploy/spinnaker/

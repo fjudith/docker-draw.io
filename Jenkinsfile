@@ -4,7 +4,7 @@
 pipeline {
     agent any
     environment {
-        REPO = 'fjudith/draw.io'
+        REPO = 'jgraph/drawio'
         PRIVATE_REPO = "${PRIVATE_REGISTRY}/${REPO}"
         DOCKER_PRIVATE = credentials('docker-private-registry')
     }

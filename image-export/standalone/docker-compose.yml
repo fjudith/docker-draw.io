@@ -1,0 +1,23 @@
+version: '3'
+services:
+  image-export:
+    image: jgraph/export-server
+    expose:
+      - "8000"
+    networks:
+      - drawionet
+    volumes:
+      - ./fonts:/usr/share/fonts/drawio
+  drawio:
+    image: jgraph/drawio
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    depends_on:
+      - image-export
+    networks:
+      - drawionet
+    environment:
+      - EXPORT_URL=http://image-export:8000/
+networks:
+  drawionet:
