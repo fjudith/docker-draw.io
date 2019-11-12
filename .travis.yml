@@ -33,6 +33,8 @@ jobs:
       - docker exec drawio /bin/bash -c "curl -i http://localhost:8080"
       - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
       - docker tag ${REPO}:${VERSION} ${REPO}:$TAG
+      - docker push ${REPO}:${TAG}
+      - docker push ${REPO}:${VERSION}
   - stage: Build
     env:
       - BASE_IMAGE=alpine
@@ -44,9 +46,8 @@ jobs:
       - sleep 10
       - docker logs drawio-${BASE_IMAGE}
       - docker exec drawio-${BASE_IMAGE} /bin/bash -c "curl -i http://localhost:8080"
-      - docker tag ${REPO}:${VERSION}-alpine ${REPO}:${ALPINE_TAG}
-      - docker push ${REPO}:${TAG}
+      - docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG}
       - docker push ${REPO}:${ALPINE_TAG}
-      - docker push ${REPO}:${VERSION}-alpine
+      - docker push ${REPO}:${VERSION}-${BASE_IMAGE}
 
       # - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
