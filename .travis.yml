@@ -31,6 +31,7 @@ jobs:
       - sleep 10
       - docker logs drawio
       - docker exec drawio /bin/bash -c "curl -i http://localhost:8080"
+    after_success: 
       - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
       - docker tag ${REPO}:${VERSION} ${REPO}:$TAG
       - docker push ${REPO}:${TAG}
@@ -46,6 +47,8 @@ jobs:
       - sleep 10
       - docker logs drawio-${BASE_IMAGE}
       - docker exec drawio-${BASE_IMAGE} /bin/bash -c "curl -i http://localhost:8080"
+    after_success:
+      - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
       - docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG}
       - docker push ${REPO}:${ALPINE_TAG}
       - docker push ${REPO}:${VERSION}-${BASE_IMAGE}
