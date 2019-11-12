@@ -15,7 +15,7 @@ spec:
         app: draw.io
     spec:
       containers:
-        - image: index.docker.io/fjudith/draw.io
+        - image: docker.io/fjudith/draw.io
           imagePullPolicy: IfNotPresent
           name: drawio
           resources:
