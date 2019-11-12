@@ -40,5 +40,8 @@ after_success:
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
   - docker tag $REPO:$VERSION $REPO:$TAG
   - docker tag $REPO:$VERSION-alpine $REPO:$ALPINE_TAG
-  - docker push $REPO
+  - docker push $REPO:$TAG
+  - docker push $REPO:$ALPINE_TAG
+  - docker push $REPO:$VERSION
+  - docker push $REPO:$VERSION-alpine
   # - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
