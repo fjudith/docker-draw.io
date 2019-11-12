@@ -15,32 +15,40 @@ before_install:
   - wget https://raw.githubusercontent.com/jgraph/drawio/master/VERSION
   - export VERSION=`cat VERSION`
    # Compute docker tag again if this branch is the latest
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "v$VERSION" ]; then echo "latest"; else echo $TAG ; fi`
-  - export ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "v$VERSION" ]; then echo "alpine"; else echo $ALPINE_TAG ; fi` 
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "v${VERSION}" ]; then echo "latest"; else echo $TAG ; fi`
+  - export ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "v${VERSION}" ]; then echo "alpine"; else echo $ALPINE_TAG ; fi` 
 
 jobs:
   include:
   - stage: Debian build
+    env:
+      - REPO=${REPO}
+      - VERSION=${VERSION}
+      - TAG=${TAG}
     script: 
-      - docker build -f debian/Dockerfile -t $REPO:$VERSION debian/
-      - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 $REPO:$VERSION
+      - docker build -f debian/Dockerfile -t ${REPO}:${VERSION} debian/
+      - docker run --name 'drawio' -d -p 32733:8080 -p 32734:8443 ${REPO}:${VERSION}
       - sleep 10
       - docker logs drawio
       - docker exec drawio /bin/bash -c "curl -i http://localhost:8080"
   - stage: Alpine build
+    env:
+      - REPO=${REPO}
+      - ALPINE_VERSION=${VERSION}-alpine
+      - ALPINE_TAG=${ALPINE_TAG}
     script: 
-      - docker build -f alpine/Dockerfile -t $REPO:$VERSION-alpine alpine/
-      - docker run --name 'drawio-alpine' -d -p 32735:8080 -p 32736:8443 $REPO:$VERSION-alpine
+      - docker build -f alpine/Dockerfile -t ${REPO}:${ALPINE_VERSION} alpine/
+      - docker run --name 'drawio-alpine' -d -p 32735:8080 -p 32736:8443 ${REPO}:${ALPINE_VERSION}
       - sleep 10
       - docker logs drawio-alpine
       - docker exec drawio-alpine /bin/bash -c "curl -i http://localhost:8080"
 
 after_success:
-  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-  - docker tag $REPO:$VERSION $REPO:$TAG
-  - docker tag $REPO:$VERSION-alpine $REPO:$ALPINE_TAG
-  - docker push $REPO:$TAG
-  - docker push $REPO:$ALPINE_TAG
-  - docker push $REPO:$VERSION
-  - docker push $REPO:$VERSION-alpine
+  - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+  - docker tag ${REPO}:${VERSION} ${REPO}:$TAG
+  - docker tag ${REPO}:${VERSION}-alpine ${REPO}:$ALPINE_TAG
+  - docker push ${REPO}:${TAG}
+  - docker push ${REPO}:${ALPINE_TAG}
+  - docker push ${REPO}:${VERSION}
+  - docker push ${REPO}:${VERSION}-alpine
   # - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
