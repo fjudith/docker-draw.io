@@ -1,43 +1,102 @@
 # fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' -v 'docker-hub-email=<email>' -v 'docker-hub-username=<username>' -v 'docker-hub-password=<password>' -v 'docker-hub-repo=<organisation>'
 resources:
+  - name: version
+    type: semver
+    source:
+      driver: git
+      uri: https://github.com/jgraph/draw.io.git
+      branch: master
+      file: VERSION
+  
   - name: docker-draw.io
     type: git
     source:
       uri: https://github.com/fjudith/docker-draw.io.git
       branch: master
-
+  
   - name: draw.io:latest
-    type: docker-image
+    type: registry-image
     source:
-      email: ((docker-hub-email))
       username: ((docker-hub-username))
       password: ((docker-hub-password))
       repository: ((docker-hub-repo))/draw.io
       tag: latest
-
   - name: draw.io:alpine
-    type: docker-image
+    type: registry-image
     source:
-      email: ((docker-hub-email))
       username: ((docker-hub-username))
       password: ((docker-hub-password))
       repository: ((docker-hub-repo))/draw.io
       tag: alpine
 
 jobs:
-  - name: publish-debian
+  - name: build-and-push-debian
     public: true
     plan:
-    - get: docker-draw.io
+    - get: version
       trigger: true
+    - get: docker-draw.io
+    - task: build
+      privileged: true
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source:
+            repository: dullest/oci-build-task
+            # repository: vito/oci-build-task
+        params:
+          CONTEXT: ./docker-draw.io/debian/
+          DOCKERFILE: ./docker-draw.io/debian/Dockerfile
+        inputs:
+          - name: docker-draw.io
+          - name: version
+        outputs:
+          - name: image
+        run:
+          path: build
     - put: draw.io:latest
-      params:
-        build: docker-draw.io/debian
-  - name: publish-alpine
+      params: {image: image/image.tar, additional_tags: version/version}
+
+  - name: build-and-push-alpine
     public: true
     plan:
-    - get: docker-draw.io
+    - get: version
       trigger: true
+    - get: docker-draw.io
+    - task: write-additional-tags
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source: { repository: busybox }
+        inputs:
+            - name: version
+        run:
+          path: sh
+          args:
+            - -exc
+            - echo "$(cat version/version)-alpine" > additionnal_tags/version
+        outputs:
+          - name: additionnal_tags
+    - task: build
+      privileged: true
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source:
+            repository: dullest/oci-build-task
+            # repository: vito/oci-build-task
+        params:
+          CONTEXT: ./docker-draw.io/alpine/
+          DOCKERFILE: ./docker-draw.io/alpine/Dockerfile
+        inputs:
+          - name: additionnal_tags
+          - name: docker-draw.io
+        outputs:
+          - name: image
+        run:
+          path: build
     - put: draw.io:alpine
-      params:
-        build: docker-draw.io/alpine
+      params: {image: image/image.tar, additional_tags: additionnal_tags/version}
