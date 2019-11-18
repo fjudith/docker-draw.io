@@ -6,7 +6,6 @@ resources:
       uri: https://github.com/fjudith/docker-draw.io.git
       branch: master
 
-resources:
   - name: draw.io
     type: git
     source:
