@@ -15,7 +15,7 @@ spec:
         app: draw.io
     spec:
       containers:
-        - image: docker.io/fjudith/draw.io
+        - image: registry.weavelab.io/fjudith/draw.io
           imagePullPolicy: IfNotPresent
           name: drawio
           resources:
