@@ -6,6 +6,13 @@ resources:
       uri: https://github.com/fjudith/docker-draw.io.git
       branch: master
 
+resources:
+  - name: draw.io
+    type: git
+    source:
+      uri: https://github.com/jgraph/draw.io.git
+      branch: master
+
   - name: draw.io:latest
     type: docker-image
     source:
@@ -28,16 +35,18 @@ jobs:
   - name: publish-debian
     public: true
     plan:
-    - get: docker-draw.io
+    - get: draw.io
       trigger: true
+    - get: docker-draw.io
     - put: draw.io:latest
       params:
         build: docker-draw.io/debian
   - name: publish-alpine
     public: true
     plan:
-    - get: docker-draw.io
+    - get: draw.io
       trigger: true
+    - get: docker-draw.io
     - put: draw.io:alpine
       params:
         build: docker-draw.io/alpine
