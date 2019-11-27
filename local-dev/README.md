@@ -13,7 +13,7 @@ customized:
 
 1. customize PreConfig.js.  It is git-ignored.
 2. docker build
-      > $ docker build -t <tag> .
+      > $ docker build -t ANY-TAG .
 
 ## Reference
 
