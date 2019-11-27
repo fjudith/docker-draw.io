@@ -1,12 +1,12 @@
 FROM tomcat:9-jre11-slim
 
-LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
+LABEL maintainer="Fuminori IDO <f-ido@lab.acs-jp.com>"
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         openjdk-11-jdk-headless ant git patch wget xmlstarlet certbot curl && \
     cd /tmp && \
-    git clone https://github.com/jgraph/drawio.git && \
+    git clone https://github.com/maedadev/drawio.git && \
     cd /tmp/drawio/etc/build && \
     ant war && \
     cd /tmp/drawio/build && \
