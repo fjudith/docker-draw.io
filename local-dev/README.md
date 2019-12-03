@@ -11,7 +11,8 @@ customized:
 
 ## How to build
 
-1. customize PreConfig.js.  It is git-ignored.
+1. create PreConfig.js.  It is git-ignored.
+   [PreConfig.js.sample](PreConfig.js.sample) is a sample.
 2. docker build
       > $ docker build -t ANY-TAG .
 
