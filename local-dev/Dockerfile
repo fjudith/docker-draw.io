@@ -1,9 +1,11 @@
-FROM tomcat:9-jre11-slim
+FROM tomcat:9-jdk11-openjdk-slim
 
 LABEL maintainer="Fuminori IDO <f-ido@lab.acs-jp.com>"
 
 RUN apt-get update -y && \
+    mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1 && \
     apt-get install -y --no-install-recommends \
+        zip unzip \
         openjdk-11-jdk-headless ant git patch wget xmlstarlet certbot curl && \
     cd /tmp && \
     git clone https://github.com/maedadev/drawio.git && \
