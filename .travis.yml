@@ -32,10 +32,12 @@ jobs:
       - docker logs drawio
       - docker exec drawio /bin/bash -c "curl -i http://localhost:8080"
     after_success: 
-      - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-      - docker tag ${REPO}:${VERSION} ${REPO}:$TAG
-      - docker push ${REPO}:${TAG}
-      - docker push ${REPO}:${VERSION}
+      - if [[ $TRAVIS_PULL_REQUEST != "false" ]; then
+          echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
+          docker tag ${REPO}:${VERSION} ${REPO}:$TAG;
+          docker push ${REPO}:${TAG};
+          docker push ${REPO}:${VERSION};
+        fi
   - stage: Build
     env:
       - BASE_IMAGE=alpine
@@ -48,9 +50,11 @@ jobs:
       - docker logs drawio-${BASE_IMAGE}
       - docker exec drawio-${BASE_IMAGE} /bin/bash -c "curl -i http://localhost:8080"
     after_success:
-      - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-      - docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG}
-      - docker push ${REPO}:${ALPINE_TAG}
-      - docker push ${REPO}:${VERSION}-${BASE_IMAGE}
+      - if [[ $TRAVIS_PULL_REQUEST != "false" ]; then
+          echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
+          docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG};
+          docker push ${REPO}:${ALPINE_TAG};
+          docker push ${REPO}:${VERSION}-${BASE_IMAGE};
+        fi
 
       # - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
