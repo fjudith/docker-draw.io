@@ -5,7 +5,7 @@ LABEL maintainer="Florian JUDITH <florian.judith@gmail.com>"
 RUN apk add --no-cache \
     openjdk8 apache-ant git patch xmlstarlet certbot curl && \
     cd /tmp && \
-    git clone https://github.com/jgraph/drawio.git && \
+    git clone --depth=1 https://github.com/jgraph/drawio.git && \
     cd /tmp/drawio/etc/build && \
     ant war && \
     cd /tmp/drawio/build && \
