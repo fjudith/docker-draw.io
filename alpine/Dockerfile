@@ -2,7 +2,7 @@ FROM tomcat:9-jre8-alpine
 
 LABEL maintainer="Florian JUDITH <florian.judith@gmail.com>"
 
-RUN apk add \
+RUN apk add --no-cache \
     openjdk8 apache-ant git patch xmlstarlet certbot curl && \
     cd /tmp && \
     git clone https://github.com/jgraph/drawio.git && \
