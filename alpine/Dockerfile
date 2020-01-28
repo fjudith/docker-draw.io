@@ -33,7 +33,6 @@ RUN cd $CATALINA_HOME && \
 COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
 
