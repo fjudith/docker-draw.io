@@ -4,6 +4,9 @@ kind: Deployment
 metadata:
   name: drawio
   namespace: drawio
+  labels:
+    app: draw.io
+    verison: latest
 spec:
   replicas: 2
   selector:
