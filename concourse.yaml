@@ -30,7 +30,7 @@ resources:
     type: git
     source:
       uri: https://github.com/fjudith/docker-draw.io.git
-      branch: master
+      branch: onepoint
   
   - name: draw.io:latest
     type: registry-image
