@@ -3,10 +3,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drawio
-  namespace: drawio
+  namespace: drawio-staging
   labels:
     app: draw.io
-    version: demo1
+    verison: demo1
 spec:
   replicas: 2
   selector:

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: drawio
+  name: drawio-staging
   labels:
     app: draw.io
     version: demo1
