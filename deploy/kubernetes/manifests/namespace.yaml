@@ -5,5 +5,5 @@ metadata:
   name: drawio
   labels:
     app: draw.io
-    version: demo0
+    version: demo
 ---

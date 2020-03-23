@@ -6,7 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
-    version: demo0
+    version: demo
 spec:
   type: ClusterIP
   sessionAffinity: ClientIP
