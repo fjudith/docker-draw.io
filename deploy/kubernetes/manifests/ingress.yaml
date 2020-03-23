@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+     kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  name: drawio
+  namespace: drawio
+spec:
+  rules:
+  - host: draw.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: drawio
+          servicePort: 9000
+        path: /
+  tls:
+  - hosts:
+    - drawio.example.com
+    secretName: drawio-prod-cert
