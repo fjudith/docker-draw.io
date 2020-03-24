@@ -6,7 +6,7 @@ metadata:
   namespace: drawio-staging
   labels:
     app: draw.io
-    version: demo
+    version: demo0
 spec:
   replicas: 2
   selector:
