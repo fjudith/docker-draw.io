@@ -1,4 +1,4 @@
-# fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' -v 'docker-hub-email=<email>' -v 'docker-hub-username=<username>' -v 'docker-hub-password=<password>' -v 'docker-hub-repo=<organisation>'
+# fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' --load-vars-from ./concourse.vars
 # resource_types:
 # - name: spinnaker
 #   type: docker-image
@@ -35,16 +35,16 @@ resources:
   - name: draw.io:latest
     type: registry-image
     source:
-      username: ((docker-hub-username))
-      password: ((docker-hub-password))
-      repository: ((docker-hub-repo))/draw.io
+      username: ((registry-username))
+      password: ((registry-password))
+      repository: ((registry-repo))/draw.io
       tag: latest
   - name: draw.io:alpine
     type: registry-image
     source:
-      username: ((docker-hub-username))
-      password: ((docker-hub-password))
-      repository: ((docker-hub-repo))/draw.io
+      username: ((registry-username))
+      password: ((registry-password))
+      repository: ((registry-repo))/draw.io
       tag: alpine
 
 jobs:
