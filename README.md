@@ -1,6 +1,7 @@
 [![Get your own image badge on microbadger.com](https://images.microbadger.com/badges/image/fjudith/draw.io.svg)](https://microbadger.com/images/fjudith/draw.io)
 [![Build Status](https://travis-ci.org/fjudith/docker-draw.io.svg?branch=master)](https://travis-ci.org/fjudith/docker-draw.io)
 [![Docker Repository on Quay](https://quay.io/repository/fjudith/draw.io/status "Docker Repository on Quay")](https://quay.io/repository/fjudith/draw.io)
+[![Runme](https://svc.runme.io/static/button.svg)](https://runme.io/run?app_id=825de29f-c507-49dd-ab0e-2ff76211d659)
 
 [latest](https://github.com/fjudith/docker-draw.io/tree/master/debian)
 [alpine](https://github.com/fjudith/docker-draw.io/tree/master/alpine)
