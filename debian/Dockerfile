@@ -6,7 +6,7 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         openjdk-11-jdk-headless ant git patch wget xmlstarlet certbot curl && \
     cd /tmp && \
-    git clone https://github.com/jgraph/drawio.git && \
+    git clone --depth=1 https://github.com/jgraph/drawio.git && \
     cd /tmp/drawio/etc/build && \
     ant war && \
     cd /tmp/drawio/build && \
@@ -36,7 +36,6 @@ RUN cd $CATALINA_HOME && \
 COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
 

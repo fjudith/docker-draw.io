@@ -2,10 +2,10 @@ FROM tomcat:9-jre8-alpine
 
 LABEL maintainer="Florian JUDITH <florian.judith@gmail.com>"
 
-RUN apk add \
+RUN apk add --no-cache \
     openjdk8 apache-ant git patch xmlstarlet certbot curl && \
     cd /tmp && \
-    git clone https://github.com/jgraph/drawio.git && \
+    git clone --depth=1 https://github.com/jgraph/drawio.git && \
     cd /tmp/drawio/etc/build && \
     ant war && \
     cd /tmp/drawio/build && \
@@ -33,7 +33,6 @@ RUN cd $CATALINA_HOME && \
 COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
 
