@@ -1,6 +1,19 @@
 FROM tomcat:9-jre11-slim
 
-LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
+ARG VCS_REF
+ARG VERSION
+ARG BUILD_DATE
+
+LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Draw.io" \
+      org.label-schema.description="diagrams.net, previously draw.io, is an online diagramming web site that delivers the source in this project" \
+      org.label-schema.url="https://diagrams.net" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/fjudith/docker-draw.io" \
+      org.label-schema.vendor="diagrams.net" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0"
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \

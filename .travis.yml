@@ -14,6 +14,8 @@ before_install:
   # Get draw.io current latest version
   - wget https://raw.githubusercontent.com/jgraph/drawio/master/VERSION
   - export VERSION=`cat VERSION`
+  - export VCS_REF=`git rev-parse --short HEAD`
+  - BUILD_DATE=`date -u "+%Y-%m-%d %H:%M:%S.%s"`
    # Compute docker tag again if this branch is the latest
   - export TAG=`if [ "$TRAVIS_BRANCH" == "v${VERSION}" ]; then echo "latest"; else echo $TAG ; fi`
   - export ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "v${VERSION}" ]; then echo "alpine"; else echo $ALPINE_TAG ; fi` 
@@ -26,7 +28,12 @@ jobs:
       - HTTP_PORT=32733
       - HTTPS_PORT=32734
     script: 
-      - docker build -f ${BASE_IMAGE}/Dockerfile -t ${REPO}:${VERSION} ${BASE_IMAGE}/
+      - > 
+        docker build -f ${BASE_IMAGE}/Dockerfile -t ${REPO}:${VERSION} \
+        --build-arg VCS_REF=${VCS_REF} \
+        --build-arg VERSION=${VERSION} \
+        --build-arg BUILD_DATE=${BUILD_DATE} \
+        ${BASE_IMAGE}/
       - docker run --name 'drawio' -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}
       - sleep 10
       - docker logs drawio
@@ -45,7 +52,12 @@ jobs:
       - HTTP_PORT=32735
       - HTTPS_PORT=32736
     script: 
-      - docker build -f ${BASE_IMAGE}/Dockerfile -t ${REPO}:${VERSION}-${BASE_IMAGE} ${BASE_IMAGE}/
+      - > 
+        docker build -f ${BASE_IMAGE}/Dockerfile -t ${REPO}:${VERSION}-${BASE_IMAGE} \
+        --build-arg VCS_REF=${VCS_REF} \
+        --build-arg VERSION=${VERSION} \
+        --build-arg BUILD_DATE=${BUILD_DATE} \
+        ${BASE_IMAGE}/
       - docker run --name "drawio-${BASE_IMAGE}" -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}-${BASE_IMAGE}
       - sleep 10
       - docker logs drawio-${BASE_IMAGE}
