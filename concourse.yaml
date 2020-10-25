@@ -1,4 +1,5 @@
-# fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' -v 'docker-hub-email=<email>' -v 'docker-hub-username=<username>' -v 'docker-hub-password=<password>' -v 'docker-hub-repo=<organisation>'
+# fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' --load-vars-from ./concourse.vars
+
 resources:
   - name: version
     type: semver
@@ -12,21 +13,21 @@ resources:
     type: git
     source:
       uri: https://github.com/fjudith/docker-draw.io.git
-      branch: master
+      branch: onepoint
   
-  - name: draw.io:latest
+  - name: "draw.io-latest"
     type: registry-image
     source:
-      username: ((docker-hub-username))
-      password: ((docker-hub-password))
-      repository: ((docker-hub-repo))/draw.io
+      username: ((registry-username))
+      password: ((registry-password))
+      repository: ((registry-repo))/draw.io
       tag: latest
-  - name: draw.io:alpine
+  - name: "draw.io-alpine"
     type: registry-image
     source:
-      username: ((docker-hub-username))
-      password: ((docker-hub-password))
-      repository: ((docker-hub-repo))/draw.io
+      username: ((registry-username))
+      password: ((registry-password))
+      repository: ((registry-repo))/draw.io
       tag: alpine
 
 jobs:
@@ -55,7 +56,7 @@ jobs:
           - name: image
         run:
           path: build
-    - put: draw.io:latest
+    - put: draw.io-latest
       params: {image: image/image.tar, additional_tags: version/version}
 
   - name: build-and-push-alpine
@@ -98,5 +99,5 @@ jobs:
           - name: image
         run:
           path: build
-    - put: draw.io:alpine
+    - put: draw.io-alpine
       params: {image: image/image.tar, additional_tags: additionnal_tags/version}
