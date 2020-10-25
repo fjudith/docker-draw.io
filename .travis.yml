@@ -33,7 +33,7 @@ jobs:
       - docker exec drawio /bin/bash -c "curl -i http://localhost:8080"
     after_success: 
       - >
-        if [[ $TRAVIS_PULL_REQUEST != "false" ]; then
+        if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
         echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
         docker tag ${REPO}:${VERSION} ${REPO}:$TAG
         docker push ${REPO}:${TAG}
@@ -52,7 +52,7 @@ jobs:
       - docker exec drawio-${BASE_IMAGE} /bin/bash -c "curl -i http://localhost:8080"
     after_success:
       - >
-        if [[ $TRAVIS_PULL_REQUEST != "false" ]; then
+        if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
         echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
         docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG}
         docker push ${REPO}:${ALPINE_TAG}
