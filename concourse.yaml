@@ -13,7 +13,7 @@ resources:
     type: git
     source:
       uri: https://github.com/fjudith/docker-draw.io.git
-      branch: onepoint
+      branch: master
   
   - name: "draw.io-latest"
     type: registry-image
