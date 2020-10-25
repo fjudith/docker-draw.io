@@ -32,14 +32,14 @@ resources:
       uri: https://github.com/fjudith/docker-draw.io.git
       branch: onepoint
   
-  - name: draw.io:latest
+  - name: "draw.io-latest"
     type: registry-image
     source:
       username: ((registry-username))
       password: ((registry-password))
       repository: ((registry-repo))/draw.io
       tag: latest
-  - name: draw.io:alpine
+  - name: "draw.io-alpine"
     type: registry-image
     source:
       username: ((registry-username))
@@ -73,7 +73,7 @@ jobs:
           - name: image
         run:
           path: build
-    - put: draw.io:latest
+    - put: draw.io-latest
       params: {image: image/image.tar, additional_tags: version/version}
 
   - name: build-and-push-alpine
@@ -116,5 +116,5 @@ jobs:
           - name: image
         run:
           path: build
-    - put: draw.io:alpine
+    - put: draw.io-alpine
       params: {image: image/image.tar, additional_tags: additionnal_tags/version}
