@@ -34,7 +34,7 @@ jobs:
         --file ${BASE_IMAGE}/Dockerfile
         --build-arg VCS_REF=${VCS_REF}
         --build-arg VERSION=${VERSION}
-        --build-arg BUILD_DATE=${BUILD_DATE}
+        --build-arg BUILD_DATE="${BUILD_DATE}"
         --tag ${REPO}:${VERSION}
         ${BASE_IMAGE}/
       - docker run --name 'drawio' -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}
@@ -61,7 +61,7 @@ jobs:
         --file ${BASE_IMAGE}/Dockerfile
         --build-arg VCS_REF=${VCS_REF}
         --build-arg VERSION=${VERSION}
-        --build-arg BUILD_DATE=${BUILD_DATE}
+        --build-arg BUILD_DATE="${BUILD_DATE}"
         --tag ${REPO}:${VERSION}-${BASE_IMAGE}
         ${BASE_IMAGE}/
       - docker run --name "drawio-${BASE_IMAGE}" -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}-${BASE_IMAGE}
