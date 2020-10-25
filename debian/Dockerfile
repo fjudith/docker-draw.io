@@ -1,4 +1,4 @@
-FROM tomcat:9-jre11-slim
+FROM tomcat:9-jre11
 
 LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>"
 
