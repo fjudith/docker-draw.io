@@ -14,6 +14,8 @@ before_install:
   # Get draw.io current latest version
   - wget https://raw.githubusercontent.com/jgraph/drawio/master/VERSION
   - export VERSION=`cat VERSION`
+  - export VCS_REF=`git rev-parse --short HEAD`
+  - BUILD_DATE=`date -u "+%Y-%m-%d %H:%M:%S.%s"`
    # Compute docker tag again if this branch is the latest
   - export TAG=`if [ "$TRAVIS_BRANCH" == "v${VERSION}" ]; then echo "latest"; else echo $TAG ; fi`
   - export ALPINE_TAG=`if [ "$TRAVIS_BRANCH" == "v${VERSION}" ]; then echo "alpine"; else echo $ALPINE_TAG ; fi` 
@@ -25,8 +27,16 @@ jobs:
       - BASE_IMAGE=debian
       - HTTP_PORT=32733
       - HTTPS_PORT=32734
-    script: 
-      - docker build -f ${BASE_IMAGE}/Dockerfile -t ${REPO}:${VERSION} ${BASE_IMAGE}/
+    script:
+      - set -ex
+      - > 
+        docker build
+        --file ${BASE_IMAGE}/Dockerfile
+        --build-arg VCS_REF=${VCS_REF}
+        --build-arg VERSION=${VERSION}
+        --build-arg BUILD_DATE="${BUILD_DATE}"
+        --tag ${REPO}:${VERSION}
+        ${BASE_IMAGE}/
       - docker run --name 'drawio' -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}
       - sleep 10
       - docker logs drawio
@@ -34,18 +44,26 @@ jobs:
     after_success: 
       - >
         if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
-        echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-        docker tag ${REPO}:${VERSION} ${REPO}:$TAG
-        docker push ${REPO}:${TAG}
-        docker push ${REPO}:${VERSION}
+        echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
+        docker tag ${REPO}:${VERSION} ${REPO}:$TAG;
+        docker push ${REPO}:${TAG};
+        docker push ${REPO}:${VERSION};
         fi
   - stage: Build
     env:
       - BASE_IMAGE=alpine
       - HTTP_PORT=32735
       - HTTPS_PORT=32736
-    script: 
-      - docker build -f ${BASE_IMAGE}/Dockerfile -t ${REPO}:${VERSION}-${BASE_IMAGE} ${BASE_IMAGE}/
+    script:
+      - set -ex
+      - > 
+        docker build
+        --file ${BASE_IMAGE}/Dockerfile
+        --build-arg VCS_REF=${VCS_REF}
+        --build-arg VERSION=${VERSION}
+        --build-arg BUILD_DATE="${BUILD_DATE}"
+        --tag ${REPO}:${VERSION}-${BASE_IMAGE}
+        ${BASE_IMAGE}/
       - docker run --name "drawio-${BASE_IMAGE}" -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}-${BASE_IMAGE}
       - sleep 10
       - docker logs drawio-${BASE_IMAGE}
@@ -53,10 +71,10 @@ jobs:
     after_success:
       - >
         if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
-        echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-        docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG}
-        docker push ${REPO}:${ALPINE_TAG}
-        docker push ${REPO}:${VERSION}-${BASE_IMAGE}
+        echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
+        docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG};
+        docker push ${REPO}:${ALPINE_TAG};
+        docker push ${REPO}:${VERSION}-${BASE_IMAGE};
         fi
 
       # - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
