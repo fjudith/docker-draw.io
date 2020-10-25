@@ -27,11 +27,14 @@ jobs:
       - BASE_IMAGE=debian
       - HTTP_PORT=32733
       - HTTPS_PORT=32734
-    script: 
+    script:
+      - set -ex
       - > 
         docker build
         --file ${BASE_IMAGE}/Dockerfile
-        --build-arg VCS_REF=${VCS_REF},VERSION=${VERSION},BUILD_DATE=${BUILD_DATE}
+        --build-arg VCS_REF=${VCS_REF}
+        --build-arg VERSION=${VERSION}
+        --build-arg BUILD_DATE=${BUILD_DATE}
         --tag ${REPO}:${VERSION}
         ${BASE_IMAGE}/
       - docker run --name 'drawio' -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}
@@ -51,11 +54,14 @@ jobs:
       - BASE_IMAGE=alpine
       - HTTP_PORT=32735
       - HTTPS_PORT=32736
-    script: 
+    script:
+      - set -ex
       - > 
         docker build
         --file ${BASE_IMAGE}/Dockerfile
-        --build-arg VCS_REF=${VCS_REF},VERSION=${VERSION},BUILD_DATE=${BUILD_DATE}
+        --build-arg VCS_REF=${VCS_REF}
+        --build-arg VERSION=${VERSION}
+        --build-arg BUILD_DATE=${BUILD_DATE}
         --tag ${REPO}:${VERSION}-${BASE_IMAGE}
         ${BASE_IMAGE}/
       - docker run --name "drawio-${BASE_IMAGE}" -d -p ${HTTP_PORT}:8080 -p ${HTTPS_PORT}:8443 ${REPO}:${VERSION}-${BASE_IMAGE}
