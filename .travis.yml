@@ -28,7 +28,7 @@ jobs:
       - HTTP_PORT=32733
       - HTTPS_PORT=32734
     script:
-      - set -ex
+      - set -e
       - > 
         docker build
         --file ${BASE_IMAGE}/Dockerfile
@@ -41,7 +41,8 @@ jobs:
       - sleep 10
       - docker logs drawio
       - docker exec drawio /bin/bash -c "curl -i http://localhost:8080"
-    after_success: 
+    after_success:
+      - set -e;
       - >
         if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
         echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
@@ -55,7 +56,7 @@ jobs:
       - HTTP_PORT=32735
       - HTTPS_PORT=32736
     script:
-      - set -ex
+      - set -e
       - > 
         docker build
         --file ${BASE_IMAGE}/Dockerfile
@@ -69,6 +70,7 @@ jobs:
       - docker logs drawio-${BASE_IMAGE}
       - docker exec drawio-${BASE_IMAGE} /bin/bash -c "curl -i http://localhost:8080"
     after_success:
+      - set -e;
       - >
         if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
         echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
