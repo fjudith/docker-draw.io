@@ -6,7 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
-    version: demov0
+    version: v2.0.0
 spec:
   replicas: 2
   selector:
