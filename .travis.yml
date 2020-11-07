@@ -77,6 +77,6 @@ jobs:
         docker tag ${REPO}:${VERSION}-${BASE_IMAGE} ${REPO}:${ALPINE_TAG};
         docker push ${REPO}:${ALPINE_TAG};
         docker push ${REPO}:${VERSION}-${BASE_IMAGE};
+        curl -X POST https://hooks.microbadger.com/images/fjudith/draw.io/1P-8icEhqy2GmRFCYwB6a671DSM= ;
         fi
-
-      # - curl -X POST https://hooks.microbadger.com/images/jgraph/drawio/L1HSeb1zjYXdXe4RIVlHXSkT6Ng=
+      - 
