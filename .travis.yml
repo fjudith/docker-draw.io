@@ -70,7 +70,7 @@ jobs:
       - docker logs drawio-${BASE_IMAGE}
       - docker exec drawio-${BASE_IMAGE} /bin/bash -c "curl -i http://localhost:8080"
     after_success:
-      - set -e;
+      - set -e
       - >
         if [[ $TRAVIS_PULL_REQUEST != "false" ]]; then
         echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin;
@@ -79,4 +79,4 @@ jobs:
         docker push ${REPO}:${VERSION}-${BASE_IMAGE};
         curl -X POST https://hooks.microbadger.com/images/fjudith/draw.io/1P-8icEhqy2GmRFCYwB6a671DSM= ;
         fi
-      - 
+
