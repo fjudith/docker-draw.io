@@ -44,7 +44,7 @@ jobs:
 
       - name: Set ENV variables
         run: |
-          echo VERSION=$(cat ${{ env.VERSION_FILE }}) >> $GITHUB_ENV
+          echo VERSION=$(curl -s https://raw.githubusercontent.com/jgraph/drawio/master/VERSION | cat) >> $GITHUB_ENV
           echo BUILD_DATE=$(date -u "+%Y-%m-%d %H:%M:%S.%s") >> $GITHUB_ENV
       
       - name: Login to DockerHub
