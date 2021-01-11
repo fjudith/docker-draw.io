@@ -1,5 +1,5 @@
+![Build Image](https://github.com/fjudith/docker-draw.io/workflows/Build%20Image/badge.svg)
 [![Get your own image badge on microbadger.com](https://images.microbadger.com/badges/image/fjudith/draw.io.svg)](https://microbadger.com/images/fjudith/draw.io)
-[![Build Status](https://travis-ci.org/fjudith/docker-draw.io.svg?branch=master)](https://travis-ci.org/fjudith/docker-draw.io)
 [![Docker Repository on Quay](https://quay.io/repository/fjudith/draw.io/status "Docker Repository on Quay")](https://quay.io/repository/fjudith/draw.io)
 
 [latest](https://github.com/fjudith/docker-draw.io/tree/master/debian)
