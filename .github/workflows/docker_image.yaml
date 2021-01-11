@@ -5,10 +5,12 @@ on:
   paths:
     - 'alpine/**'
     - 'debian/**'
+    - '.github/workflows/docker_image.yaml'
   pull_request:
     paths:
     - 'alpine/**'
     - 'debian/**'
+    - '.github/workflows/docker_image.yaml'
   schedule:
     - cron: '0 6 * * *'
 
@@ -19,6 +21,8 @@ env:
 jobs:
   image-build:
     name: "Building ${{ matrix.drawio }} base image"
+    runs-on: ubuntu-20.04
+    
     strategy:
       matrix:
         drawio:
