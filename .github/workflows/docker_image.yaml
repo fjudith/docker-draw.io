@@ -44,7 +44,7 @@ jobs:
 
       - name: Set ENV variables
         run: |
-          echo VERSION=(cat ${{ env.VERSION_FILE }}) >> $GITHUB_ENV
+          echo VERSION=$(cat ${{ env.VERSION_FILE }}) >> $GITHUB_ENV
       
       - name: Login to DockerHub
         uses: docker/login-action@v1 
