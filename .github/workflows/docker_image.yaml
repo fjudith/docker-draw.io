@@ -17,7 +17,7 @@ env:
   VERSION_FILE: "./drawio/VERSION"
 
 jobs:
-  build-image:
+  image-build:
     name: "Building ${{ matrix.drawio }} base image"
     strategy:
       matrix:

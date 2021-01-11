@@ -46,9 +46,9 @@ RUN cd $CATALINA_HOME && \
     conf/server.xml
 
 # Copy draw.io config files
-COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
+COPY files/PreConfig.js files/PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
-COPY docker-entrypoint.sh /
+COPY scripts/docker-entrypoint.sh /
 
 WORKDIR $CATALINA_HOME
 
