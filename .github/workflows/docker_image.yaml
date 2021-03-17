@@ -12,8 +12,6 @@ on:
     - 'debian/**'
     - '.github/workflows/docker_image.yaml'
   schedule:
-    - on:
-  schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '0 6 * * *'
 
