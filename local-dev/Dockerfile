@@ -1,30 +1,22 @@
-FROM tomcat:9-jre8-alpine
+FROM tomcat:9-jdk11-openjdk-slim
 
-ARG VCS_REF
-ARG VERSION
-ARG BUILD_DATE
+LABEL maintainer="Fuminori IDO <f-ido@lab.acs-jp.com>"
 
-LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.name="Draw.io" \
-      org.label-schema.description="diagrams.net, previously draw.io, is an online diagramming web site that delivers the source in this project" \
-      org.label-schema.url="https://diagrams.net" \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/fjudith/docker-draw.io" \
-      org.label-schema.vendor="diagrams.net" \
-      org.label-schema.version=$VERSION \
-      org.label-schema.schema-version="1.0"
-
-RUN apk add --no-cache \
-    openjdk8 apache-ant git patch xmlstarlet certbot curl && \
+RUN apt-get update -y && \
+    mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1 && \
+    apt-get install -y --no-install-recommends \
+        zip unzip \
+        openjdk-11-jdk-headless ant git patch wget xmlstarlet certbot curl && \
     cd /tmp && \
-    git clone --depth=1 https://github.com/jgraph/drawio.git && \
+    git clone https://github.com/maedadev/drawio.git && \
     cd /tmp/drawio/etc/build && \
     ant war && \
     cd /tmp/drawio/build && \
-    mkdir -p $CATALINA_HOME/webapps/draw && \
     unzip /tmp/drawio/build/draw.war -d $CATALINA_HOME/webapps/draw && \
-    apk del --purge openjdk8 apache-ant git patch && \
+    apt-get remove -y --purge openjdk-11-jdk-headless ant git patch wget && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -r /var/lib/apt/lists/* && \
     rm -rf \
         /tmp/drawio
 
@@ -46,6 +38,7 @@ RUN cd $CATALINA_HOME && \
 COPY PreConfig.js PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
 

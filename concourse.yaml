@@ -1,21 +1,4 @@
 # fly -t concourse set-pipeline --config './concourse.yaml' --pipeline 'docker-draw.io' --load-vars-from ./concourse.vars
-# resource_types:
-# - name: spinnaker
-#   type: docker-image
-#   source:
-#     repository: concourse/spinnaker-resource
-
-# - name: trigger-spinnaker-pipeline
-#   type: spinnaker
-#   source:
-#     spinnaker_api: ((spinnaker_gate))
-#     spinnaker_application: drawio
-#     spinnaker_pipeline: Deploy to staging
-#     spinnaker_x509_cert: ((spinnaker_x509_cert))
-#     spinnaker_x509_key: ((spinnaker_x509_key))
-#     status_check_timeout: 2m
-#     statuses:
-#     - succeeded
 
 resources:
   - name: version
