@@ -1,3 +1,4 @@
 dist/
 .jenkins
 deploy/spinnaker/
+*.vars
