@@ -23,7 +23,7 @@ resources:
     source:
       driver: git
       uri: https://github.com/jgraph/draw.io.git
-      branch: master
+      branch: dev
       file: VERSION
   
   - name: docker-draw.io
@@ -61,8 +61,8 @@ jobs:
         image_resource:
           type: registry-image
           source:
-            repository: dullest/oci-build-task
-            # repository: vito/oci-build-task
+            # repository: dullest/oci-build-task
+            repository: vito/oci-build-task
         params:
           CONTEXT: ./docker-draw.io/debian/
           DOCKERFILE: ./docker-draw.io/debian/Dockerfile
@@ -104,8 +104,8 @@ jobs:
         image_resource:
           type: registry-image
           source:
-            repository: dullest/oci-build-task
-            # repository: vito/oci-build-task
+            # repository: dullest/oci-build-task
+            repository: vito/oci-build-task
         params:
           CONTEXT: ./docker-draw.io/alpine/
           DOCKERFILE: ./docker-draw.io/alpine/Dockerfile
