@@ -18,7 +18,7 @@ spec:
         app: draw.io
     spec:
       containers:
-        - image: docker.io/fjudith/draw.io:14.4.9-alpine
+        - image: harbor.testruction.io/fjudith/draw.io:14.6.10-alpine
           imagePullPolicy: IfNotPresent
           name: drawio
           resources:
