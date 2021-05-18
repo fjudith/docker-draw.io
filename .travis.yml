@@ -28,6 +28,7 @@ jobs:
       - HTTP_PORT=32733
       - HTTPS_PORT=32734
     script:
+      - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
       - set -e
       - > 
         docker build
@@ -56,6 +57,7 @@ jobs:
       - HTTP_PORT=32735
       - HTTPS_PORT=32736
     script:
+      - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
       - set -e
       - > 
         docker build
