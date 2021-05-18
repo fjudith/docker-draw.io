@@ -6,7 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
-    version: v13.8.3-alpine
+    version: v14.4.9-alpine
 spec:
   replicas: 2
   selector:
@@ -18,7 +18,7 @@ spec:
         app: draw.io
     spec:
       containers:
-        - image: docker.io/testruction/draw.io:13.8.3-alpine
+        - image: docker.io/testruction/draw.io:14.4.9-alpine
           imagePullPolicy: IfNotPresent
           name: drawio
           resources:
