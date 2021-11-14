@@ -2,7 +2,6 @@
 # https://github.com/nextcloud/docker/issues/380
 FROM openjdk:11-jdk-slim AS build
 
-LABEL FROM=https://github.com/jgraph/docker-drawio/blob/dev/debian/Dockerfile
 ARG VERSION
 
 WORKDIR /tmp/drawio/etc/build/
