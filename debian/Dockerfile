@@ -1,4 +1,26 @@
+FROM openjdk:11-jdk-slim AS build
+
+LABEL FROM=https://github.com/jgraph/docker-drawio/blob/dev/debian/Dockerfile
+ARG TAG_VERSION
+
+WORKDIR /tmp/drawio/etc/build/
+
+RUN apt-get update -y \
+# this solves some weird issue with openjdk-11-jdk-headless
+# https://github.com/nextcloud/docker/issues/380
+    && mkdir -p /usr/share/man/man1 \
+    && apt-get install -y \
+        ant \
+        git \
+    && cd /tmp \
+    && git clone --depth 1 --branch $TAG_VERSION https://github.com/jgraph/drawio.git \
+    && ant war
+
+
+# Final image
 FROM tomcat:9-jre11-slim
+
+LABEL maintainer="Florian JUDITH <florian.judith.b@gamil.com"
 
 ARG VCS_REF
 ARG VERSION
@@ -17,38 +39,34 @@ LABEL maintainer="Florian JUDITH <florian.judith.b@gmail.com>" \
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        openjdk-11-jdk-headless ant git patch wget xmlstarlet certbot curl && \
-    cd /tmp && \
-    git clone --depth=1 https://github.com/jgraph/drawio.git && \
-    cd /tmp/drawio/etc/build && \
-    ant war && \
-    cd /tmp/drawio/build && \
-    unzip /tmp/drawio/build/draw.war -d $CATALINA_HOME/webapps/draw && \
-    apt-get remove -y --purge openjdk-11-jdk-headless ant git patch wget && \
+        certbot \
+        curl \
+        xmlstarlet && \
     apt-get autoremove -y --purge && \
     apt-get clean && \
-    rm -r /var/lib/apt/lists/* && \
-    rm -rf \
-        /tmp/drawio
+    rm -r /var/lib/apt/lists/*
 
-# Update server.xml to set Draw.io webapp to root
-RUN cd $CATALINA_HOME && \
+COPY --from=build /tmp/drawio/build/draw.war /tmp
+
+# Extract draw.io war & Update server.xml to set Draw.io webapp to root
+RUN mkdir -p $CATALINA_HOME/webapps/draw && \
+    unzip /tmp/draw.war -d $CATALINA_HOME/webapps/draw && \
+    rm -rf /tmp/draw.war /tmp/drawio && \
+    cd $CATALINA_HOME && \
     xmlstarlet ed \
-    -P -S -L \
-    -i '/Server/Service/Engine/Host/Valve' -t 'elem' -n 'Context' \
-    -i '/Server/Service/Engine/Host/Context' -t 'attr' -n 'path' -v '/' \
-    -i '/Server/Service/Engine/Host/Context[@path="/"]' -t 'attr' -n 'docBase' -v 'draw' \
-    -s '/Server/Service/Engine/Host/Context[@path="/"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
-    -i '/Server/Service/Engine/Host/Valve' -t 'elem' -n 'Context' \
-    -i '/Server/Service/Engine/Host/Context[not(@path="/")]' -t 'attr' -n 'path' -v '/ROOT' \
-    -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'attr' -n 'docBase' -v 'ROOT' \
-    -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
-    conf/server.xml
+        -P -S -L \
+        -i '/Server/Service/Engine/Host/Valve' -t 'elem' -n 'Context' \
+        -i '/Server/Service/Engine/Host/Context' -t 'attr' -n 'path' -v '/' \
+        -i '/Server/Service/Engine/Host/Context[@path="/"]' -t 'attr' -n 'docBase' -v 'draw' \
+        -s '/Server/Service/Engine/Host/Context[@path="/"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
+        -i '/Server/Service/Engine/Host/Valve' -t 'elem' -n 'Context' \
+        -i '/Server/Service/Engine/Host/Context[not(@path="/")]' -t 'attr' -n 'path' -v '/ROOT' \
+        -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'attr' -n 'docBase' -v 'ROOT' \
+        -s '/Server/Service/Engine/Host/Context[@path="/ROOT"]' -t 'elem' -n 'WatchedResource' -v 'WEB-INF/web.xml' \
+        conf/server.xml
 
-# Copy draw.io config files
-COPY files/PreConfig.js files/PostConfig.js $CATALINA_HOME/webapps/draw/js/
 # Copy docker-entrypoint
-COPY scripts/docker-entrypoint.sh /
+COPY files/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
 WORKDIR $CATALINA_HOME
