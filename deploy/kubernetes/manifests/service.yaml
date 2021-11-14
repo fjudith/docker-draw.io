@@ -6,6 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
+    variable: value
     version: 15.7.3
 spec:
   type: ClusterIP
