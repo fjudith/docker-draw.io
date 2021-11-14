@@ -3,7 +3,7 @@
 FROM openjdk:11-jdk-slim AS build
 
 LABEL FROM=https://github.com/jgraph/docker-drawio/blob/dev/debian/Dockerfile
-ARG TAG_VERSION
+ARG VERSION
 
 WORKDIR /tmp/drawio/etc/build/
 
@@ -13,7 +13,7 @@ RUN apt-get update -y \
         ant \
         git \
     && cd /tmp \
-    && git clone --depth 1 --branch $TAG_VERSION https://github.com/jgraph/drawio.git \
+    && git clone --depth 1 --branch ${VERSION} https://github.com/jgraph/drawio.git \
     && ant war
 
 
