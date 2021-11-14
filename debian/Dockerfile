@@ -1,3 +1,5 @@
+# this solves some weird issue with openjdk-11-jdk-headless
+# https://github.com/nextcloud/docker/issues/380
 FROM openjdk:11-jdk-slim AS build
 
 LABEL FROM=https://github.com/jgraph/docker-drawio/blob/dev/debian/Dockerfile
@@ -6,8 +8,6 @@ ARG TAG_VERSION
 WORKDIR /tmp/drawio/etc/build/
 
 RUN apt-get update -y \
-# this solves some weird issue with openjdk-11-jdk-headless
-# https://github.com/nextcloud/docker/issues/380
     && mkdir -p /usr/share/man/man1 \
     && apt-get install -y \
         ant \
