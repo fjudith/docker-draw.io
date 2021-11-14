@@ -6,7 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
-    version: v14.4.9-alpine
+    version: v15.7.3-alpine
 spec:
   replicas: 2
   selector:
@@ -18,7 +18,7 @@ spec:
         app: draw.io
     spec:
       containers:
-        - image: harbor.testruction.io/library/draw.io:14.6.10-alpine
+        - image: harbor.testruction.io/library/draw.io:15.7.3-alpine
           imagePullPolicy: IfNotPresent
           name: drawio
           resources:
