@@ -6,7 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
-    version: 15.7.3-alpine
+    version: 15.7.3
 spec:
   type: ClusterIP
   sessionAffinity: ClientIP

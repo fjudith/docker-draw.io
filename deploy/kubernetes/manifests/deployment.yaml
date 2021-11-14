@@ -6,7 +6,7 @@ metadata:
   namespace: drawio
   labels:
     app: draw.io
-    version: v15.7.3-alpine
+    version: v15.7.3
 spec:
   replicas: 2
   selector:
