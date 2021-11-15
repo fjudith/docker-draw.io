@@ -4,7 +4,7 @@ FROM openjdk:11-jdk-slim AS build
 
 ARG VERSION
 
-WORKDIR /tmp/drawio/etc/build/
+
 
 RUN apt-get update -y \
     && mkdir -p /usr/share/man/man1 \
@@ -12,8 +12,10 @@ RUN apt-get update -y \
         ant \
         git \
     && cd /tmp \
-    && git clone --depth 1 --branch "v${VERSION}" https://github.com/jgraph/drawio.git \
-    && ant war
+    && git clone --depth 1 --branch "v${VERSION}" https://github.com/jgraph/drawio.git
+
+WORKDIR /tmp/drawio/etc/build/
+RUN ant war
 
 
 # Final image
