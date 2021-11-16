@@ -7,7 +7,7 @@ metadata:
   labels:
     app: draw.io
     version: v15.7.3
-    variable: value
+    #variable: value
 spec:
   replicas: 2
   selector:
