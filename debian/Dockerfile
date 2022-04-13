@@ -12,7 +12,7 @@ RUN apt-get update -y \
         ant \
         git \
     && cd /tmp \
-    && git clone --depth 1 --branch "v${VERSION}" https://github.com/jgraph/drawio.git
+    && git clone --depth 1 https://github.com/jgraph/drawio.git
 
 WORKDIR /tmp/drawio/etc/build/
 RUN ant war
